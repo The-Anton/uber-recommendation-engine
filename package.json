@@ -1,7 +1,7 @@
 {
-  "name": "gdsc-ait-website",
+  "name": "uber-recommendation",
   "version": "0.1.0",
-  "description": "An offical repository for the GDSC AIT website",
+  "description": "Uber recommendation application",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/DSC-AIT-Pune/gdsc-ait-website.git"
+    "url": "https://github.com/The-Anton/uber-recommendation-engine"
   },
   "keywords": [
     "NodeJS",
@@ -18,12 +18,12 @@
     "Express",
     "ReactJS"
   ],
-  "author": "GDSC AIT",
+  "author": "Shekhar Kumar Singh",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/DSC-AIT-Pune/gdsc-ait-website/issues"
+    "url": "https://github.com/The-Anton/uber-recommendation-engine/issues"
   },
-  "homepage": "https://github.com/DSC-AIT-Pune/gdsc-ait-website#readme",
+  "homepage": "https://github.com/The-Anton/uber-recommendation-engine#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",

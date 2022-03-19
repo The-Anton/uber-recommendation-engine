@@ -1,11 +1,11 @@
 {
-  "name": "gdsc-ait-website",
+  "name": "uber-recommendation",
   "version": "0.1.0",
-  "description": "An offical repository for the GDSC AIT website",
+  "description": "Uber recommendation application",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/DSC-AIT-Pune/gdsc-ait-website.git"
+    "url": "https://github.com/The-Anton/uber-recommendation-engine.git"
   },
   "dependencies": {
     "@emotion/react": "^11.5.0",
