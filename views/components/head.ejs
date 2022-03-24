@@ -35,6 +35,10 @@ type="text/javascript"
   }
 
   window.onload = function () {
+
+  // check for Geolocation support
+  if (navigator.geolocation) {
+    console.log("Geolocation is supported!");
     showRecommendationCard()
     var startPos;
     var geoOptions = {
@@ -52,7 +56,7 @@ type="text/javascript"
       );
     };
     var geoError = function (error) {
-      console.log("Error occurred. Error code: " + error.code);
+      console.log("Error occurred. Error code: " + error);
       // error.code can be:
       //   0: unknown error
       //   1: permission denied
@@ -61,8 +65,11 @@ type="text/javascript"
     };
 
     navigator.geolocation.getCurrentPosition(geoSuccess, geoError, geoOptions);
-  };
+  } else {
+    console.log("Geolocation is not supported for this Browser/OS.");
+  }
 
+  };
 
 
   function showRecommendationCard(){
