@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('components/twospothead'); %>
+  </head>
+  <body>
+    <main>
+        <div id="map" class="shadow-lg h-full w-full h-full"  style="width: 100%; height: 100vh;">
+        </div>
+
+        <div class="slider-card">
+            <div class="flex flex-col card-body border transition p-8 pt-16">
+                    <div class="flex">
+                        <div class="m-5 shadow-lg rounded-3xl text-black bg-white-400 px-4 py-2">
+                            Resturant
+                        </div>
+
+                        <div class="m-5 shadow-lg rounded-3xl text-black bg-white-400 px-4 py-2">
+                            Tourist Place
+                        </div>
+
+                        <div class="m-5 shadow-lg rounded-3xl text-black bg-white-400 px-4 py-2">
+                            Hiking
+                        </div>
+
+                        <div class="m-5 shadow-lg rounded-3xl text-black bg-white-400 px-4 py-2">
+                            Resturant
+                        </div>
+                    </div>
+
+                    <div id="recommendation_area">
+
+                    </div>
+
+                    <div class="place-card relative flex bg-white-200 p-5 shadow rounded-2xl border-gray-500 shadow-2xl" style="width: 654px; height: 264px;">
+                        <div class="ribbon ribbon-top-left"><span>Uber Eats</span></div>
+                        <div class="w-2/5 m-auto">
+                            <img class="rounded-2xl" src="https://images.thrillophilia.com/image/upload/s--XcozMrbO--/c_fill,g_auto,h_600,q_auto,w_975/f_auto,fl_strip_profile/v1/images/photos/000/178/583/original/1573565509_cover.jpg.jpg" style="width: 196px; height: 196px;"></img>
+                        </div>
+                        <div class="flex flex-col w-3/5 h-32">
+                            <div class="flex flex-col w-3/5 h-32" >
+                                <p class="w-full text-base text-gray-900 pt-5 pl-5 pr-5 ">Contraste</p>
+                                <div class="flex flex-col pl-5 pr-5 ">
+                                    <p class="w-40 text-gray-500">Modern European</p>
+                                    <div class="flex mt-2">
+                                        <p class="ext-xs text-gray-500 mr-3">4.7</p>
+                                        <div >
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star"></span>
+                                            <span class="fa fa-star"></span>
+                                        </div>
+                                        
+                                    </div>
+                                    <div>
+                                        <div class="mt-2 mb-2 w-24 text-center shadow-lg rounded-3xl text-black bg-white-400 px-2 py-1">
+                                            Opened
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+    
+                            <div class="flex w-3/5 pt-10 pl-5 pr-5">
+                                <button class="bg-black text-white font-regular py-2 px-4 border border-gray-400 rounded-xl shadow">
+                                    Book a cab
+                                  </button>
+                            </div>
+                        </div>
+                        
+                        <div class="pt-2">
+                            <img src="https://img.icons8.com/external-tanah-basah-glyph-tanah-basah/42/000000/external-plus-user-interface-tanah-basah-glyph-tanah-basah-2.png"/>                        
+                        </div>
+                    </div>
+
+                    <!-- 
+                    <div class="route-card bg-white-200" style="width: 654px; height: 278px;">
+                        <div class="flex items-center justify-center flex-1 p-6 bg-purple-50 bg-opacity-0 border rounded-3xl border-gray-100 shadow-2xl">
+                            <div class="flex flex-col w-full space-y-4 h-full">
+                                <div class="w-full">
+                                    <div class="flex items-center justify-between flex-1 h-full px-6 py-6 bg-purple-50 rounded-3xl">
+                                        <p class="text-xl font-medium text-indigo-600">6 Mar, 2022</p>
+                                        <p class="text-4xl font-heavy text-red-400">$24</p>
+                                    </div>
+                                </div>
+                                <div class="m-5 flex flex-col items-start justify-end w-full">
+                                    <div class="flex">
+                                        
+                                        <div class="m-auto w-5 h-5 bg-white border-2 rounded-full border-red-400"></div>
+
+                                        <div class="mt-2 ml-5 mr-5 flex flex-col space-y-0.5 justify-end ">
+                                            <p class="text-sm font-medium text-gray-400">Pickup location</p>
+                                            <p class="text-base font-medium text-gray-800">Internet city - Business tower</p>
+                                        </div>
+                                    </div>
+                                    <div class="border-2-2 relative border-dashed border-blue-500 h-4 border" style="top: 24.5%; left: 1.5%;"></div>
+
+                                    <div class="flex">
+                                        <img class="m-auto w-5" src="https://img.icons8.com/color/64/000000/marker--v1.png"/>  
+                                        <div class="mb-2 ml-5 mr-5 flex flex-col justify-end">
+                                            <p class="text-sm font-medium text-gray-400">Drop off</p>
+                                            <p class="text-base font-medium text-gray-800">Mall of the Emirates Metro </p>
+                                        </div>
+                                    </div>
+                                    
+                                
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="vertical-line"></div>
+                    <div class="route-card bg-white-200" style="width: 654px; height: 364px;">
+                        <div class="flex items-center justify-center flex-1 p-6 bg-purple-50 bg-opacity-0 border rounded-3xl border-gray-100 shadow-2xl">
+                            <div class="flex flex-col w-full space-y-4 h-full">
+                                <div class="w-full">
+                                    <div class="flex items-center justify-between flex-1 h-full px-6 py-6 bg-purple-50 rounded-3xl">
+                                        <p class="text-xl font-medium text-indigo-600">6 Mar, 2022</p>
+                                        <p class="text-4xl font-heavy text-red-400">$24</p>
+                                    </div>
+                                </div>
+                                <div class="m-5 flex flex-col items-start justify-end w-full">
+                                    <div class="flex">
+                                        
+                                        <div class="m-auto w-5 h-5 bg-white border-2 rounded-full border-red-400"></div>
+
+                                        <div class="mt-2 ml-5 mr-5 flex flex-col space-y-0.5 justify-end ">
+                                            <p class="text-sm font-medium text-gray-400">Pickup location</p>
+                                            <p class="text-base font-medium text-gray-800">Internet city - Business tower</p>
+                                        </div>
+                                    </div>
+                                    <div class="border-2-2 relative border-dashed border-blue-500 h-4 border" style="top: 24.5%; left: 1.5%;"></div>
+
+                                    <div class="flex">
+                                        <img class="m-auto w-5" src="https://img.icons8.com/color/64/000000/marker--v1.png"/>  
+                                        <div class="mb-2 ml-5 mr-5 flex flex-col justify-end">
+                                            <p class="text-sm font-medium text-gray-400">Drop off</p>
+                                            <p class="text-base font-medium text-gray-800">Mall of the Emirates Metro </p>
+                                        </div>
+                                    </div>
+                                    
+        
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                -->
+            
+            </div>
+        </div>
+
+
+        
+
+    </main>
+
+    <script>
+
+        function showRecommendationCard(){
+            
+            $(function(){
+                $('.slider-card').trigger('click');
+            });
+            // let recommendElement = document.getElementById("recommendPlacesButton");
+            // recommendElement.trigger('click');
+        }
+        
+    </script>
+  </body>
+</html>

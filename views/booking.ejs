@@ -1,0 +1,185 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('components/head'); %>
+
+    <style>
+        .ribbon {
+            width: 150px;
+            height: 150px;
+            overflow: hidden;
+            position: absolute;
+          }
+          .ribbon::before,
+          .ribbon::after {
+            position: absolute;
+            z-index: -1;
+            content: '';
+            display: block;
+            border: 5px solid #3FC060;
+          }
+          .ribbon span {
+            position: absolute;
+            display: block;
+            width: 225px;
+            padding: 15px 0;
+            background-color: #3FC060;
+            box-shadow: 0 5px 10px rgba(0,0,0,.1);
+            color: #fff;
+            font: 700 18px/1 'Lato', sans-serif;
+            text-shadow: 0 1px 1px rgba(0,0,0,.2);
+            text-transform: uppercase;
+            text-align: center;
+          }
+          
+          /* top left*/
+          .ribbon-top-left {
+            top: -10px;
+            left: -10px;
+          }
+          .ribbon-top-left::before,
+          .ribbon-top-left::after {
+            border-top-color: transparent;
+            border-left-color: transparent;
+          }
+          .ribbon-top-left::before {
+            top: 0;
+            right: 0;
+          }
+          .ribbon-top-left::after {
+            bottom: 0;
+            left: 0;
+          }
+          .ribbon-top-left span {
+            right: -25px;
+            top: 30px;
+            transform: rotate(-45deg);
+          }
+    </style>
+  </head>
+  <body>
+    <main>
+        <div class="shadow-lg h-3/10 p-2 pt-10">
+            <span class="m-5 ml-24 font-regular text-5xl">Uber destination</span>
+
+            <div class="flex m-3">
+                <div class="w-11/12  text-xl">
+                    <div class="flex m-5">
+                        <div class="w-1/12 text-center pt-5 mr-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-10 m-auto">
+                            <path d="M352 256C352 309 309 352 256 352C202.1 352 160 309 160 256C160 202.1 202.1 160 256 160C309 160 352 202.1 352 256zM256 208C229.5 208 208 229.5 208 256C208 282.5 229.5 304 256 304C282.5 304 304 282.5 304 256C304 229.5 282.5 208 256 208zM256 0C269.3 0 280 10.75 280 24V65.49C366.8 76.32 435.7 145.2 446.5 232H488C501.3 232 512 242.7 512 256C512 269.3 501.3 280 488 280H446.5C435.7 366.8 366.8 435.7 280 446.5V488C280 501.3 269.3 512 256 512C242.7 512 232 501.3 232 488V446.5C145.2 435.7 76.32 366.8 65.49 280H24C10.75 280 0 269.3 0 256C0 242.7 10.75 232 24 232H65.49C76.32 145.2 145.2 76.32 232 65.49V24C232 10.75 242.7 0 256 0V0zM112 256C112 335.5 176.5 400 256 400C335.5 400 400 335.5 400 256C400 176.5 335.5 112 256 112C176.5 112 112 176.5 112 256z"/></svg>
+                        </div>
+                        <div class="w-10/12">
+                            <input id="origin" class="bg-gray-200 h-24 appearance-none border-2 border-gray-200 rounded-2xl w-full py-2 px-8 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="from" type="text" value="Army Institute of Technology"></input>
+                        </div>
+                    </div>
+                    <div class="flex m-5">
+                        <div class="w-1/12 pt-6 mr-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="w-8 m-auto">
+                            <path d="M168.3 499.2C116.1 435 0 279.4 0 192C0 85.96 85.96 0 192 0C298 0 384 85.96 384 192C384 279.4 267 435 215.7 499.2C203.4 514.5 180.6 514.5 168.3 499.2H168.3zM192 256C227.3 256 256 227.3 256 192C256 156.7 227.3 128 192 128C156.7 128 128 156.7 128 192C128 227.3 156.7 256 192 256z"/></svg>
+                        </div>
+                        
+                        <div class="w-10/12">
+                            <input id="destination" class="bg-gray-200 h-24 appearance-none border-2 border-gray-200 rounded-2xl w-full py-2 px-8 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="from" type="text" value="Pune Railway Satation"></div>
+                        </div>
+                </div>
+
+                
+            </div>
+            <div class="flex w-full mb-5 pl-28 ">
+                <button id="recommendPlacesButton" onclick="showRecommendationCard()" class="h-18 mr-8 bg-black text-white font-regular text-2xl py-4 px-8 border border-gray-400 rounded-2xl shadow">
+                    Recommend Places
+                </button>
+                <button  onclick="bookCab()" class="h-18 bg-black text-white font-regular text-2xl py-4 px-8 border border-gray-400 rounded-2xl shadow">
+                    Book a cab
+                </button>
+            </div>
+
+            <div class="w-full mb-5 pl-28">
+                
+            </div>
+
+        </div>
+
+        <div class="slider-card">
+            <div class="card-body border transition p-8 pt-8">
+                <div class="flex m-5">
+                    <div class="m-5 shadow-lg rounded-3xl text-black bg-white-400 px-4 py-2">
+                        Resturant
+                    </div>
+
+                    <div class="m-5 shadow-lg rounded-3xl text-black bg-white-400 px-4 py-2">
+                        Tourist Place
+                    </div>
+
+                    <div class="m-5 shadow-lg rounded-3xl text-black bg-white-400 px-4 py-2">
+                        Hiking
+                    </div>
+
+                    <div class="m-5 shadow-lg rounded-3xl text-black bg-white-400 px-4 py-2">
+                        Resturant
+                    </div>
+                </div>
+                    <div class="place-card relative flex bg-white-200 p-5 shadow rounded-2xl border-gray-500 shadow-2xl" style="width: 654px; height: 264px;">
+                        <div class="ribbon ribbon-top-left"><span>Uber Eats</span></div>
+                        <div class="w-2/5 m-auto">
+                            <img class="rounded-2xl" src="https://images.thrillophilia.com/image/upload/s--XcozMrbO--/c_fill,g_auto,h_600,q_auto,w_975/f_auto,fl_strip_profile/v1/images/photos/000/178/583/original/1573565509_cover.jpg.jpg" style="width: 196px; height: 196px;"></img>
+                        </div>
+                        <div class="flex flex-col w-3/5 h-32">
+                            <div class="flex flex-col w-3/5 h-32" >
+                                <p class="w-full text-base text-gray-900 pt-5 pl-5 pr-5 ">Contraste</p>
+                                <div class="flex flex-col pl-5 pr-5 ">
+                                    <p class="w-40 text-gray-500">Modern European</p>
+                                    <div class="flex mt-2">
+                                        <p class="ext-xs text-gray-500 mr-3">4.7</p>
+                                        <div >
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star"></span>
+                                            <span class="fa fa-star"></span>
+                                        </div>
+                                        
+                                    </div>
+                                    <div>
+                                        <div class="mt-2 mb-2 w-24 text-center shadow-lg rounded-3xl text-black bg-white-400 px-2 py-1">
+                                            Opened
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+    
+                            <div class="flex w-3/5 pt-10 pl-5 pr-5">
+                                <button class="bg-black text-white font-regular py-2 px-4 border border-gray-400 rounded-xl shadow">
+                                    Book a cab
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="pt-2">
+                            <img src="https://img.icons8.com/external-tanah-basah-glyph-tanah-basah/42/000000/external-plus-user-interface-tanah-basah-glyph-tanah-basah-2.png"/>                        
+                        </div>
+                    </div> 
+            
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+
+        
+        function bookCab(){
+            let url = new URL("http://localhost:3000/nextspot");
+            let origin = document.getElementById('origin').value;
+            let destination = document.getElementById('destination').value;
+
+            url.searchParams.append('origin', origin);
+            url.searchParams.append('destination', destination);
+            window.open(url, "_self");
+        }
+    </script>
+  </body>
+</html>

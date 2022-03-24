@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('components/head'); %>
+  </head>
+  <body>
+    <main>
+
+        <div>
+                <div id="map" class="m-auto" style="width: 80%; height: 400px;"></div>
+
+                <div class="m-auto mt-32 w-4/12">
+                    <div class="m-3">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="distance">
+                            Recommend places within
+                        </label>
+                        <input type="text" id="distance" value="3" size="2"  class="shadow appearance-none border rounded w-9/12  py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/> miles of the route    
+                    </div>
+
+                    <!-- 
+
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="type">
+                            Type
+                        </label>
+                        <input type="text" id="type" value="Tourist_Place"  class="shadow appearance-none border rounded w-6/12 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />    
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
+                            Name
+                        </label>
+                        <input type="text" id="name" value="" class="shadow appearance-none border rounded w-6/12 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="keyword">
+                            Keyword
+                        </label>
+                        <input type="text" id="keyword" value="" class="shadow appearance-none border rounded w-6/12 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                    </div>
+
+                    -->
+                    
+
+                    <div class="m-3">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="from">
+                            From
+                        </label>
+                        <input type="text" id="from" value="Army Institute of Technology" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"/>
+                    </div>
+                    
+                    <div class="m-3">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="to">
+                            To
+                        </label>
+                        <input type="text" id="to" value="Pune Railway Satation" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />    
+                    </div>
+                    
+                   
+    
+                    <button type="submit" onclick="route()" class="m-3  bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow text-center">Book a cab</button>
+    
+                </div>
+                
+                
+        
+                
+                <%- include('components/recommendation'); %>
+        
+    
+        </div>
+      
+    </main>
+  </body>
+</html>
