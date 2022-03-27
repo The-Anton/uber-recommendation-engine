@@ -11,6 +11,7 @@ const path = require('path');
 
 // load env variables
 
+
 dotenv.config({path:'./config/config.env'})
 
 require('dotenv').config();
@@ -22,7 +23,9 @@ require('colors');
 // route files
 
 const app = express();
-// Body Parser
+
+const place = require('./api/place/index.js');
+const nearby = require('./api/nearby/index.js');
 
 app.use(express.json());
 // sanitize Data
@@ -52,7 +55,8 @@ app.options('*', cors());
 app.use(fileUpload());
 
 // Use Routes
-
+app.use('/api/place', place);
+app.use('/api/nearby', nearby);
 
 // set the view engine to ejs
 app.set('view engine', 'ejs');
@@ -68,6 +72,21 @@ app.get('/booking', function(req, res) {
 
 app.get('/nextspot', function(req, res) {
   res.render('nextspot');
+});
+
+app.get('/multiroute', function(req, res) {
+
+  // var placesString = req.query.places.split('|');
+
+  // var places = placesString.map((place)=>{
+  //   let placeName = place.split('^')[0];
+  //   let placeId = place.split('^')[1];
+
+  //   return {"name": placeName, "place_id": placeId}
+  // })
+
+  // console.log(places);
+  res.render('multiroute', {places: req.query.places});
 });
 
 app.get('/login', function(req, res) {
