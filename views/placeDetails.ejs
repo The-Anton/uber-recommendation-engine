@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('components/simplehead'); %>
+  </head>
+  <body>
+    <main>
+
+        <div class="pt-16">
+            <div class="text-center m-5 ">
+                <h2 class="text-3xl font-bold"> <%= place.knowledge_graph.title %></h2>
+            </div>
+            <p class="text-2xl m-16"><%= reviewData.reviews[0].text %></p>
+
+            <div class="mt-5 mb-5">
+                <iframe class="m-auto rounded-lg" width="80%" height="354px" src="<%= place.inline_videos[0].link %>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="m-16">
+                <span class="text-2xl"><%= reviewData.reviews[1].text %></span>
+                <span class="text-2xl"><%= reviewData.reviews[2].text %></span>
+                <span class="text-2xl"><%= reviewData.reviews[3].text %></span>
+            </div>
+            
+
+            <div class="flex  text-center">
+                <img class="m-auto rounded-2xl w-5/12 h-42" src="<%= place.inline_images[0].thumbnail %>" ></img>
+                <img class="m-auto rounded-2xl w-5/12 h-42" src="<%= place.inline_images[1].thumbnail %>" ></img>
+
+            </div>
+            <p class="text-2xl m-16"><%= reviewData.reviews[4].text %></p>
+
+
+            <div class="flex-grow w-full">
+                <div class="mx-auto w-full ">
+                  <div class="my-8">
+                    <div class="flex justify-between items-center m-16 mb-4">
+                      <h2 class="text-3xl font-medium">
+                        Reviews
+                        <a href="#" class=""
+                          ><span
+                            class="text-salmon font-medium text-lg ml-2 hover:underline"
+                            >See all
+                          </span></a
+                        >
+                      </h2>
+                      <div>
+                        <button
+                          class="cursor-pointer text-xl mx-1 text-indigo-600 font-bold"
+                        >
+                          <<
+                        </button>
+                        <button
+                          class="cursor-pointer text-xl mx-1 text-indigo-600 font-bold"
+                        >
+                          >>
+                        </button>
+                      </div>
+                    </div>
+                    <div
+                      id="scrollContainer"
+                      class="flex flex-no-wrap p-5 overflow-x-scroll scrolling-touch items-start mb-8"
+                    >
+
+                    <% for(let i =0; i<googleMapReviews.result.reviews.length; i++) { %>
+
+                            <div class="flex-none w-2/3 md:w-2/3 mr-8 md:pb-4 border rounded-2xl shadow-xl">
+                                    <a href="#" class="space-y-4">
+                                      <div class="px-4 py-2">
+                                        <div class="text-lg leading-6 font-medium space-y-1">
+                                          <h3 class="font-bold text-gray-800 text-3xl mb-2">
+                                            <%= googleMapReviews.result.reviews[i].author_name %>
+                                          </h3>
+                                        </div>
+                                        <div class="flex mt-2">
+                                            <p class="ext-xs text-gray-500 mr-3"><%= googleMapReviews.result.reviews[i].rating%></p>
+                                            <div >
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star"></span>
+                                                <span class="fa fa-star"></span>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="text-lg">
+                                          <p class="">
+                                            <%= googleMapReviews.result.reviews[i].text%>
+                                          </p>
+                                        </div>
+                                      </div>
+                                    </a>
+            
+                                </div>
+                 <% } %>
+                  </div>
+                </div>
+              </div>
+
+        </div>
+    </main>
+
+    <script>
+        function getYouTubeEmbedLink(raw_link){
+            let videoId = raw_link.split('=')[1];
+
+            return `https://www.youtube.com/embed/${videoId}`;
+        }
+    </script>
+  </body>
+</html>
