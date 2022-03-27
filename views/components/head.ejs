@@ -35,7 +35,7 @@ type="text/javascript"
   }
 
   window.onload = function () {
-    showRecommendationCard()
+    //showRecommendationCard()
     var startPos;
     var geoOptions = {
       enableHighAccuracy: true,
@@ -67,12 +67,12 @@ type="text/javascript"
 
   function showRecommendationCard(){
             
-            $(function(){
-                $('.slider-card').trigger('click');
-            });
-            // let recommendElement = document.getElementById("recommendPlacesButton");
-            // recommendElement.trigger('click');
-        }
+      $(function(){
+          $('.slider-card').trigger('click');
+      });
+      // let recommendElement = document.getElementById("recommendPlacesButton");
+      // recommendElement.trigger('click');
+  }
 
         
   function initialize(latitude, longitude) {
@@ -376,47 +376,47 @@ type="text/javascript"
 
   function renderRecommendations(gmarkers, place) {
     var recommendation_area_html = 
-                `<div class="place-card relative flex bg-white-200 p-5 shadow rounded-2xl border-gray-500 shadow-2xl" style="width: 654px; height: 264px;">
-                        <div class="ribbon ribbon-top-left"><span>Uber Eats</span></div>
-                        <div class="w-2/5 m-auto">
-                            <img class="rounded-2xl" src="https://images.thrillophilia.com/image/upload/s--XcozMrbO--/c_fill,g_auto,h_600,q_auto,w_975/f_auto,fl_strip_profile/v1/images/photos/000/178/583/original/1573565509_cover.jpg.jpg" style="width: 196px; height: 196px;"></img>
-                        </div>
-                        <div class="flex flex-col w-3/5 h-32">
-                            <div class="flex flex-col w-3/5 h-32" >
-                                <p class="w-full text-base text-gray-900 pt-5 pl-5 pr-5 ">${place.name}</p>
-                                <div class="flex flex-col pl-5 pr-5 ">
-                                    <p class="w-40 text-gray-500">Modern European</p>
-                                    <div class="flex mt-2">
-                                        <p class="ext-xs text-gray-500 mr-3">${place.rating}</p>
-                                        <div >
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star"></span>
-                                            <span class="fa fa-star"></span>
-                                        </div>
-                                        
-                                    </div>
-                                    <div>
-                                        <div class="mt-2 mb-2 w-24 text-center shadow-lg rounded-3xl text-black bg-white-400 px-2 py-1">
-                                            Opened
-                                        </div>
+                `<div class="place-card relative flex bg-white-200 p-5 shadow rounded-2xl border-gray-500 shadow-2xl" style="width: 800px; height: 300px;">
+                    <div class="ribbon ribbon-top-left"><span>Uber Eats</span></div>
+                    <div class="w-2/5 m-auto">
+                        <img class="rounded-2xl" src="https://images.thrillophilia.com/image/upload/s--XcozMrbO--/c_fill,g_auto,h_600,q_auto,w_975/f_auto,fl_strip_profile/v1/images/photos/000/178/583/original/1573565509_cover.jpg.jpg" style="width: 196px; height: 196px;"></img>
+                    </div>
+                    <div class="flex flex-col w-3/5 h-42">
+                        <div class="flex flex-col w-3/5 h-32" >
+                            <p class="w-full text-2xl text-gray-900 pt-5 pl-5 pr-5 ">${place.name}</p>
+                            <div class="flex flex-col pl-5 pr-5 ">
+                                <p class="w-40 text-gray-500">Modern European</p>
+                                <div class="flex mt-2">
+                                    <p class="ext-xs text-gray-500 mr-3">${place.rating}</p>
+                                    <div >
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>
                                     </div>
                                     
                                 </div>
-                            </div>
-    
-                            <div class="flex w-3/5 pt-10 pl-5 pr-5">
-                                <button class="bg-black text-white font-regular py-2 px-4 border border-gray-400 rounded-xl shadow">
-                                    Book a cab
-                                  </button>
+                                <div>
+                                    <div class="mt-2 mb-2 w-24 text-center shadow-lg rounded-3xl text-black bg-white-400 px-2 py-1">
+                                        Opened
+                                    </div>
+                                </div>
+                                
                             </div>
                         </div>
-                        
-                        <div class="pt-2">
-                            <img src="https://img.icons8.com/external-tanah-basah-glyph-tanah-basah/42/000000/external-plus-user-interface-tanah-basah-glyph-tanah-basah-2.png"/>                        
+
+                        <div class="flex w-3/5 mt-10 pl-5 pr-5">
+                            <button class="bg-black text-white font-regular py-2 px-4 border border-gray-400 rounded-xl shadow">
+                                Book a cab
+                              </button>
                         </div>
-                    </div>`
+                    </div>
+                    
+                    <div class="pt-2">
+                        <img src="https://img.icons8.com/external-tanah-basah-glyph-tanah-basah/42/000000/external-plus-user-interface-tanah-basah-glyph-tanah-basah-2.png"/>                        
+                    </div>
+                </div>`
     
     // `<div class="bg-white p-6 rounded-lg shadow-lg">
     //     <div class="px-6 py-4">
@@ -672,31 +672,27 @@ type="text/javascript"
     }
   }
 
-
-
   .slider-card {
+    position: absolute;
+    bottom: 0;
     border-radius:.35rem;
     overflow: hidden;
     width: 100%;
-    height: 100%;
     background-color: white;
+    border-top-right-radius:30px;
+    border-top-left-radius:30px;
+    z-index: -1;
+    transition: bottom 1s;
   }
   
   .card-body {
-    position: fixed;
-    bottom: 0px;
-    height: 6%;
+    
     min-width: 100%;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: white;
-    transition: top 1s;
-    border-top-right-radius:30px;
-    border-top-left-radius:30px;
-    transition: all 1s;
-    cursor: pointer;
   }
   
   .card-text {
@@ -704,11 +700,7 @@ type="text/javascript"
     height: 100px;
   }
   
-  .card-body.transition {
-      height: 70%;
-      overflow-y: scroll;
-      transition: all 1s;
-  }
+
 
   .vertical-line{
       display: inline-block;
@@ -732,9 +724,20 @@ type="text/javascript"
 </style>
 
 <script>
+  var clicked=true;
+
   $(document).ready(function(){
-    $(".slider-card").click(function () {
-      $(".card-body").toggleClass("transition");
+    $("#recommendPlacesButton").click(function () {
+      if(clicked)
+      {
+          clicked=false;
+          $(".slider-card").css({"bottom": "70%"});
+      }
+      else
+      {
+          clicked=true;
+          $(".slider-card").css({"bottom": "0"});
+      }
     });
   });
 
