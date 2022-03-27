@@ -251,7 +251,7 @@
 
         
         function bookCab(){
-            let url = new URL("http://localhost:3000/nextspot");
+            let url = new URL(window.location.origin + "/nextspot/");
             let origin = document.getElementById('origin').value;
             let destination = document.getElementById('destination').value;
 
