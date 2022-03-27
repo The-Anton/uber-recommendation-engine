@@ -6,75 +6,38 @@
   </head>
   <body>
     <main>
-        <div id="map" class="shadow-lg h-full w-full h-full"  style="width: 100%; height: 100vh;">
+        <div id="map" class="shadow-lg h-full w-full h-6/12"  style="width: 100%; height: 40vh;">
         </div>
 
         <div class="slider-card">
             <div class="flex flex-col card-body border transition p-8 pt-16">
+                <h1 class="text-3xl m-5">Places to visit next</h1>
                     <div class="flex">
-                        <div class="m-5 shadow-lg rounded-3xl text-black bg-white-400 px-4 py-2">
+                        <div id="suggestionButton" class="m-5 text-xl xshadow-lg bg-slate-300 rounded-3xl text-white font-bold px-4 py-2">
+                            Suggestion
+                        </div>
+                        <div id="restaurantButton" class="m-5 text-xl shadow-lg rounded-3xl text-black bg-white-400 px-4 py-2" onclick="renderRestaurants()">
                             Resturant
                         </div>
 
-                        <div class="m-5 shadow-lg rounded-3xl text-black bg-white-400 px-4 py-2">
+                        <div id="touristButton" class="m-5 text-xl shadow-lg rounded-3xl text-black bg-white-400 px-4 py-2" onclick="renderTouristPlaces()">
                             Tourist Place
                         </div>
 
-                        <div class="m-5 shadow-lg rounded-3xl text-black bg-white-400 px-4 py-2">
-                            Hiking
+                        <div id="religiousButton" class="m-5 text-xl shadow-lg rounded-3xl text-black bg-white-400 px-4 py-2" onclick="renderReligiousPlaces()">
+                            Religious
                         </div>
 
-                        <div class="m-5 shadow-lg rounded-3xl text-black bg-white-400 px-4 py-2">
-                            Resturant
+                        <div id="gardenButton" class="m-5 text-xl shadow-lg rounded-3xl text-black bg-white-400 px-4 py-2" onclick="renderGardernPlaces()">
+                            Garden
                         </div>
                     </div>
 
                     <div id="recommendation_area">
-
+                        <iframe class="mt-16"src="https://embed.lottiefiles.com/animation/53512"></iframe>
                     </div>
 
-                    <div class="place-card relative flex bg-white-200 p-5 shadow rounded-2xl border-gray-500 shadow-2xl" style="width: 654px; height: 264px;">
-                        <div class="ribbon ribbon-top-left"><span>Uber Eats</span></div>
-                        <div class="w-2/5 m-auto">
-                            <img class="rounded-2xl" src="https://images.thrillophilia.com/image/upload/s--XcozMrbO--/c_fill,g_auto,h_600,q_auto,w_975/f_auto,fl_strip_profile/v1/images/photos/000/178/583/original/1573565509_cover.jpg.jpg" style="width: 196px; height: 196px;"></img>
-                        </div>
-                        <div class="flex flex-col w-3/5 h-32">
-                            <div class="flex flex-col w-3/5 h-32" >
-                                <p class="w-full text-base text-gray-900 pt-5 pl-5 pr-5 ">Contraste</p>
-                                <div class="flex flex-col pl-5 pr-5 ">
-                                    <p class="w-40 text-gray-500">Modern European</p>
-                                    <div class="flex mt-2">
-                                        <p class="ext-xs text-gray-500 mr-3">4.7</p>
-                                        <div >
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star checked"></span>
-                                            <span class="fa fa-star"></span>
-                                            <span class="fa fa-star"></span>
-                                        </div>
-                                        
-                                    </div>
-                                    <div>
-                                        <div class="mt-2 mb-2 w-24 text-center shadow-lg rounded-3xl text-black bg-white-400 px-2 py-1">
-                                            Opened
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-    
-                            <div class="flex w-3/5 pt-10 pl-5 pr-5">
-                                <button class="bg-black text-white font-regular py-2 px-4 border border-gray-400 rounded-xl shadow">
-                                    Book a cab
-                                  </button>
-                            </div>
-                        </div>
-                        
-                        <div class="pt-2">
-                            <img src="https://img.icons8.com/external-tanah-basah-glyph-tanah-basah/42/000000/external-plus-user-interface-tanah-basah-glyph-tanah-basah-2.png"/>                        
-                        </div>
-                    </div>
-
+                    
                     <!-- 
                     <div class="route-card bg-white-200" style="width: 654px; height: 278px;">
                         <div class="flex items-center justify-center flex-1 p-6 bg-purple-50 bg-opacity-0 border rounded-3xl border-gray-100 shadow-2xl">
@@ -148,6 +111,11 @@
                 -->
             
             </div>
+            <div class="absolute bottom-0 left-0 w-full">
+                <button  onclick="showBestRoute()" class="h-32 w-full bg-black text-white font-regular text-5xl py-4 px-8 border border-gray-400 shadow">
+                    Show best route
+                </button>
+            </div>
         </div>
 
 
@@ -155,17 +123,5 @@
 
     </main>
 
-    <script>
-
-        function showRecommendationCard(){
-            
-            $(function(){
-                $('.slider-card').trigger('click');
-            });
-            // let recommendElement = document.getElementById("recommendPlacesButton");
-            // recommendElement.trigger('click');
-        }
-        
-    </script>
   </body>
 </html>
