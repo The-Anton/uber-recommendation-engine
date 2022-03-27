@@ -2,167 +2,19 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <%- include('components/head'); %>
+    <%- include('components/multiroutehead'); %>
   </head>
   <body>
     <main>
-        <div id="map" class="shadow-lg h-full w-full h-full"  style="width: 100%; height: 100vh;">
+        <div id="map" class="shadow-lg h-full w-full h-full"  style="width: 100%; height: 40vh;">
         </div>
         <div class="slider-card">
-            <div class="flex flex-col card-body border transition p-8 pt-16">
-                    <div class="flex">
-                        <div class="m-5 shadow-lg rounded-3xl text-black bg-white-400 px-4 py-2">
-                            Resturant
-                        </div>
-
-                        <div class="m-5 shadow-lg rounded-3xl text-black bg-white-400 px-4 py-2">
-                            Tourist Place
-                        </div>
-
-                        <div class="m-5 shadow-lg rounded-3xl text-black bg-white-400 px-4 py-2">
-                            Hiking
-                        </div>
-
-                        <div class="m-5 shadow-lg rounded-3xl text-black bg-white-400 px-4 py-2">
-                            Resturant
-                        </div>
-                    </div>
-
-                    <div id="directions-panel">
-
-                    </div>
-
-            
-                 
-            
+          <div class="flex flex-col card-body border transition p-8 pt-16">
+            <div id="recommendation_area">
+              <iframe class="mt-16"src="https://embed.lottiefiles.com/animation/53512"></iframe>
             </div>
+          </div>
         </div>
-
-
-        
-
     </main>
-
-    <script>
-        let selectedPlaces = [];
-      
-        function togglePlaceCheckbox(element) {
-          if (element.checked && !(selectedPlaces.filter((place) => place.place_id == element.id) > 0)) {
-            addPlaceToQueue(element.value, element.id);
-          }
-        }
-      
-        function addPlaceToQueue(name, id) {
-          let placeObject = {
-            name: name,
-            place_id: id,
-          };
-          selectedPlaces.push(placeObject);
-        }
-      
-      
-        function calculateAndDisplayRoute(startLocation, endLocation, directionsService, directionsRenderer) {
-          const waypts = [];
-      
-          // const checkboxArray = document.getElementById("waypoints");
-      
-          // for (let i = 0; i < checkboxArray.length; i++) {
-          //   if (checkboxArray.options[i].selected) {
-          //     waypts.push({
-          //       location: checkboxArray[i].value,
-          //       stopover: true,
-          //     });
-          //   }
-          // }
-      
-          for (let i = 0; i < selectedPlaces.length; i++) {
-              waypts.push({
-                location: {placeId: selectedPlaces[i].place_id},
-                stopover: true,
-              });
-          }
-      
-          var rendererOptions = {
-            map: map,
-            suppressMarkers: false,
-            polylineOptions: {
-              strokeColor: 'red',
-              strokeWeight: 12
-            }
-          };
-      
-          let multiRouteDirectionRenderer = new google.maps.DirectionsRenderer(rendererOptions);
-      
-          multiRouteDirectionRenderer.setMap(map);
-      
-          directionsService
-            .route({
-              origin: startLocation, //document.getElementById("start").value,
-              destination: endLocation, //document.getElementById("end").value,
-              waypoints: waypts,
-              optimizeWaypoints: true,
-              travelMode: google.maps.TravelMode.DRIVING,
-            })
-            .then((response) => {
-              multiRouteDirectionRenderer.setDirections(response);
-      
-              console.log(response)
-              const route = response.routes[0];
-              console.log(route)
-              const summaryPanel = document.getElementById("directions-panel");
-      
-              let orderedPlaceName = []
-              orderedPlaceName.push(startLocation)
-      
-              for(let i = 0; i< route.waypoint_order.length; i++){
-                  orderedPlaceName.push(selectedPlaces[route.waypoint_order[i]].name)
-              }
-              orderedPlaceName.push(endLocation)
-      
-              summaryPanel.innerHTML = "";
-      
-              // For each route, display summary information.
-              for (let i = 0; i < route.legs.length; i++) {
-                const routeSegment = i + 1;
-      
-                summaryPanel.innerHTML += 
-                `<div class="flex flex-row m-auto mt-5 mb-5">
-                  <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                      <div class="px-6 py-4">
-                          <div class="flex justify-between">
-                              <div class="font-bold text-xl mb-2">${orderedPlaceName[i]}</div>
-                          </div>
-                          <p class="text-gray-700 text-base">
-                          </p>
-                      </div>
-                    </div>
-      
-                    <div class="flex flex-col justify-between mt-auto mb-auto ml-5 mr-5">
-                      <div class="m-auto">
-                          <i class="fa fa-long-arrow-right align-middle arrow1" aria-hidden="true"></i>
-                      </div>
-      
-                      <div class="flex flex-col">
-                          <span class="inline-block bg-green-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 m-auto">${route.legs[i].distance.text}</span>
-                          <span class="inline-block bg-green-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 m-auto">${route.legs[i].duration.text}</span>    
-                      </div>
-                    </div>
-                    
-                    <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                      <div class="px-6 py-4">
-                          <div class="flex justify-between">
-                              <div class="font-bold text-xl mb-2">${orderedPlaceName[i+1]}</div>
-                          </div>
-                      </div>
-      
-                    </div>
-                </div> `;
-              }
-            })
-            .catch((e) => window.alert("Directions request failed due to " + e + status));
-      
-           
-        }
-      </script>
   </body>
 </html>
