@@ -1,0 +1,462 @@
+<meta charset="UTF-8" />
+<title>Uber</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script
+src="https://cdn.jsdelivr.net/gh/denissellu/routeboxer@master/src/RouteBoxer.js"
+type="text/javascript"
+></script>
+<script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCATtupoIdp7bend_fjJmKy52HLRxSz_oA"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500&display=swap" rel="stylesheet">    
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+  var map = null;
+  var boxpolys = null;
+  var directions = null;
+  var routeBoxer = null;
+  var distance = null; // km
+  var service = null;
+  var gmarkers = [];
+  var boxes = null;
+  var infowindow = new google.maps.InfoWindow();
+
+  // check for Geolocation support
+  if (navigator.geolocation) {
+    console.log("Geolocation is supported!");
+  } else {
+    console.log("Geolocation is not supported for this Browser/OS.");
+  }
+
+  window.onload = function () {
+    var startPos;
+    var geoOptions = {
+      enableHighAccuracy: true,
+    };
+
+    var geoSuccess = function (position) {
+      startPos = position;
+      latitude = startPos.coords.latitude;
+      longitude = startPos.coords.longitude;
+      google.maps.event.addDomListener(
+        window,
+        "load",
+        initialize(latitude, longitude)
+      );
+    };
+    var geoError = function (error) {
+      console.log("Error occurred. Error code: " + error.code);
+
+    };
+
+    navigator.geolocation.getCurrentPosition(geoSuccess, geoError, geoOptions);
+  };
+
+
+
+  function showRecommendationCard(){
+      $(function(){
+          $('.slider-card').trigger('click');
+      });
+  }
+
+        
+  function initialize(latitude, longitude) {
+    var mapOptions = {
+      center: new google.maps.LatLng(latitude, longitude),
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      zoom: 16,
+      disableDefaultUI: true
+    };
+
+    map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    service = new google.maps.places.PlacesService(map);
+
+    routeBoxer = new RouteBoxer();
+
+    directionService = new google.maps.DirectionsService();
+    directionsRenderer = new google.maps.DirectionsRenderer({
+      map: map,
+      polylineOptions: {
+        strokeColor: 'black',
+        strokeWeight: 4
+      }
+    });
+
+    let mapStyles = [{
+        "featureType": "administrative",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "administrative.land_parcel",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "administrative.neighborhood",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "poi",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "poi",
+        "elementType": "labels.text",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "road",
+        "elementType": "labels",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "road",
+        "elementType": "labels.icon",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "transit",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "water",
+        "elementType": "labels.text",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      }
+    ]
+
+    map.set('styles', mapStyles);
+
+    var latLng = {"lat": latitude, "lng": longitude};
+    var marker = new google.maps.Marker({
+    position: latLng,
+    map: map,
+    icon: {
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 10,
+        fillOpacity: 1,
+        strokeWeight: 2,
+        fillColor: '#5384ED',
+        strokeColor: '#ffffff',
+    },
+    });
+
+  }
+
+
+
+  function findPlaces(searchIndex) {
+    var type = "tourist"; //document.getElementById('type').value;
+    var keyword = "visit"; //document.getElementById('keyword').value;
+    var name = ""; //document.getElementById('name').value;
+    var request = {
+      bounds: boxes[searchIndex],
+    };
+    if (!!type && type != "") {
+      if (type.indexOf(",") > 0) request.types = type.split(",");
+      else request.types = [type];
+    }
+    if (!!keyword && keyword != "") request.keyword = keyword;
+    if (!!name && name != "") request.name = name;
+    service.nearbySearch(request, function (results, status) {
+      if (status == google.maps.places.PlacesServiceStatus.OK) {
+        //document.getElementById('recommendation_area').innerHTML += "bounds[" + searchIndex + "] returns " + results.length + " results<br>"
+        for (var i = 0, result; (result = results[i]); i++) {
+          let typesArray = result.types;
+          console.log(typesArray);
+          if (typesArray.includes("tourist_attraction")) {
+            var marker = createMarker(result);
+          }
+        }
+      } else {
+        document.getElementById("recommendation_area").innerHTML +=
+          "bounds[" +
+          searchIndex +
+          "] returns 0 results<br>&nbsp;status=" +
+          status +
+          "<br>";
+      }
+      if (status != google.maps.places.PlacesServiceStatus.OVER_QUERY_LIMIT) {
+        searchIndex++;
+        if (searchIndex < boxes.length) findPlaces(searchIndex);
+      } else {
+        // delay 1 second and try again
+        setTimeout("findPlaces(" + searchIndex + ")", 1000);
+      }
+    });
+  }
+
+
+  function createMarker(place) {
+    var placeLoc = place.geometry.location;
+    if (place.icon) {
+      var image = new google.maps.MarkerImage(
+        place.icon,
+        new google.maps.Size(71, 71),
+        new google.maps.Point(0, 0),
+        new google.maps.Point(17, 34),
+        new google.maps.Size(25, 25)
+      );
+    } else
+      var image = {
+        url: "https://maps.gstatic.com/intl/en_us/mapfiles/markers2/measle.png",
+        size: new google.maps.Size(7, 7),
+        anchor: new google.maps.Point(3.5, 3.5),
+      };
+
+    var marker = new google.maps.Marker({
+      map: map,
+      icon: image,
+      position: place.geometry.location,
+    });
+    var request = {
+      reference: place.reference,
+    };
+    google.maps.event.addListener(marker, "click", function () {
+      service.getDetails(request, function (place, status) {
+        if (status == google.maps.places.PlacesServiceStatus.OK) {
+          var contentStr =
+            "<h5>" + place.name + "</h5><p>" + place.formatted_address;
+          if (!!place.formatted_phone_number)
+            contentStr += "<br>" + place.formatted_phone_number;
+          if (!!place.website)
+            contentStr +=
+              '<br><a target="_blank" href="' +
+              place.website +
+              '">' +
+              place.website +
+              "</a>";
+          contentStr += "<br>" + place.types + "</p>";
+          infowindow.setContent(contentStr);
+          infowindow.open(map, marker);
+        } else {
+          var contentStr = "<h5>No Result, status=" + status + "</h5>";
+          infowindow.setContent(contentStr);
+          infowindow.open(map, marker);
+        }
+      });
+    });
+    gmarkers.push(marker);
+    console.log(place);
+    if (!place.name) place.name = "result " + gmarkers.length;
+
+    renderRecommendations(gmarkers, place);
+  }
+
+  function renderRecommendations(gmarkers, place) {
+    var recommendation_area_html = 
+                `<div class="place-card relative flex bg-white-200 p-5 shadow rounded-2xl border-gray-500 shadow-2xl" style="width: 800px; height: 300px;">
+                    <div class="ribbon ribbon-top-left"><span>Uber Eats</span></div>
+                    <div class="w-2/5 m-auto">
+                        <img class="rounded-2xl" src="https://images.thrillophilia.com/image/upload/s--XcozMrbO--/c_fill,g_auto,h_600,q_auto,w_975/f_auto,fl_strip_profile/v1/images/photos/000/178/583/original/1573565509_cover.jpg.jpg" style="width: 196px; height: 196px;"></img>
+                    </div>
+                    <div class="flex flex-col w-3/5 h-42">
+                        <div class="flex flex-col w-3/5 h-32" >
+                            <p class="w-full text-2xl text-gray-900 pt-5 pl-5 pr-5 ">${place.name}</p>
+                            <div class="flex flex-col pl-5 pr-5 ">
+                                <p class="w-40 text-gray-500">Modern European</p>
+                                <div class="flex mt-2">
+                                    <p class="ext-xs text-gray-500 mr-3">${place.rating}</p>
+                                    <div >
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>
+                                    </div>
+                                    
+                                </div>
+                                <div>
+                                    <div class="mt-2 mb-2 w-24 text-center shadow-lg rounded-3xl text-black bg-white-400 px-2 py-1">
+                                        Opened
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                        <div class="flex w-3/5 mt-10 pl-5 pr-5">
+                            <button class="bg-black text-white font-regular py-2 px-4 border border-gray-400 rounded-xl shadow">
+                                Book a cab
+                              </button>
+                        </div>
+                    </div>
+                    
+                    <div class="pt-2">
+                        <img src="https://img.icons8.com/external-tanah-basah-glyph-tanah-basah/42/000000/external-plus-user-interface-tanah-basah-glyph-tanah-basah-2.png"/>                        
+                    </div>
+                </div>`
+
+    document.getElementById("recommendation_area").innerHTML +=
+      recommendation_area_html;
+  }
+
+
+
+  function renderSuggestions(activities){
+    
+  }
+</script>
+
+<script>
+  let selectedPlaces = [];
+
+  function togglePlaceCheckbox(element) {
+    if (element.checked && !(selectedPlaces.filter((place) => place.place_id == element.id) > 0)) {
+      addPlaceToQueue(element.value, element.id);
+    }
+  }
+
+  function addPlaceToQueue(name, id) {
+    let placeObject = {
+      name: name,
+      place_id: id,
+    };
+    selectedPlaces.push(placeObject);
+  }
+
+  function getCurrentRecommendation(latitude, longitude){
+
+  }
+</script>
+
+<style>
+
+  html, body {
+    font-family: 'Quicksand';
+    height: 100%;                                           
+  }
+
+
+  i {
+    color: blue;
+    margin-left: 20px;
+  }
+
+  .arrow1 {
+    animation: slide1 1s ease-in-out infinite;
+    margin-left: 9px;
+  }
+
+  @keyframes slide1 {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+
+    50% {
+      transform: translate(10px, 0);
+    }
+  }
+
+  #bookCabButton{
+    z-index: 100000;
+  }
+  .slider-card {
+    border-radius:.35rem;
+    overflow: hidden !important;
+    width: 100%;
+    height: 0%;
+    background-color: white;
+  }
+  
+  .card-body {
+    position: fixed;
+    bottom: 0px;
+    height: 0;
+    min-width: 100%;
+    overflow: hidden !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    transition: top 1s;
+    border-top-right-radius:30px;
+    border-top-left-radius:30px;
+    transition: all 1s;
+    cursor: pointer;
+  }
+
+  .card-text {
+    color: #2b0099;
+    height: 100px;
+  }
+  
+  
+  .card-body.transition {
+      height: 60%;
+      overflow-y: scroll;
+      transition: all 1s;
+  }
+
+  
+  .vertical-line{
+      display: inline-block;
+      border-left: 2px solid rgb(153, 152, 152);
+      margin: 0 10px;
+      height: 125px;
+      z-index: -1000;
+  }
+
+    @media(min-width: 524px){
+      .vertical-line{
+          display: inline-block;
+          border-left: 2px solid rgb(153, 152, 152);
+          margin: 0 10px;
+          height: 160px;
+          z-index: -1000;
+      }
+    }
+  
+
+</style>
+<script>
+  $(document).ready(function(){
+    $("#recommendPlacesButton").click(function () {
+      $(".card-body").toggleClass("transition");
+    });
+  });
+</script>
