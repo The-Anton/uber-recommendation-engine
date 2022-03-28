@@ -114,23 +114,23 @@
             </div>
 
             <div id="recommendation_area">
-              <div class="route-card bg-white-200" style="width: 900px; ;">
+              <div class="route-card bg-white-200 mb-16" style="width: 900px; ;">
                 <div class="flex items-center justify-center flex-1 p-6 bg-purple-50 bg-opacity-0 border rounded-3xl border-gray-100 shadow-2xl">
                     <div class="flex flex-col w-full space-y-4 h-full">
                         <div class="w-full">
                             <div class="flex items-center justify-between flex-1 h-full px-6 py-6 bg-purple-50 rounded-3xl">
-                                <p class="text-4xl font-heavy text-red-400">Breakfast</p>
+                                <p class="text-4xl font-heavy text-red-400">Lunch</p>
                             </div>
                         </div>
                         <div class="m-5 flex flex-col items-start justify-end w-full">
                             <div class="place-card relative flex bg-white-200 mt-12 mb-12 p-5 shadow border rounded-2xl border-gray-100 shadow-lg" style="width: 800px;">
                                 <div class="ribbon ribbon-top-left"><span>Uber Eats</span></div>
                                 <div class="w-2/5 m-auto">
-                                    <img class="rounded-2xl" src="https://images.thrillophilia.com/image/upload/s--XcozMrbO--/c_fill,g_auto,h_600,q_auto,w_975/f_auto,fl_strip_profile/v1/images/photos/000/178/583/original/1573565509_cover.jpg.jpg" style="width: 256px; height: 240px;"></img>
+                                    <img class="rounded-2xl" src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YXBwZXRpemVyc3xlbnwwfHwwfHw%3D&w=1000&q=80" style="width: 256px; height: 240px;"></img>
                                 </div>
                                 <div class="flex flex-col w-3/5 h-42">
                                     <div class="flex flex-col w-full h-42" >
-                                        <p class="w-full font-bold text-2xl text-gray-900 pl-5 pr-5 ">Taj Hotel</p>
+                                        <p class="w-full font-bold text-2xl text-gray-900 pl-5 pr-5 ">Subway delight</p>
                                         <div class="flex flex-col pl-5 pr-5 ">
                                             <p class="w-40 text-gray-500">Modern European</p>
                                             <div class="flex mt-2">
@@ -157,6 +157,62 @@
                                         <button class="bg-black font-bold text-xl text-white font-regular py-4 px-6 border border-gray-400 rounded-xl shadow">
                                           ₹125 Book Ride
                                           </button>
+
+                                          <button onclick="knowMorePage()" class="bg-black font-bold text-xl ml-5 text-white font-regular py-4 px-6 border border-gray-400 rounded-xl shadow">
+                                            Know More
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="pt-2">
+                                  <div class="form-check">
+                                    <input class="form-check-input appearance-none h-8 w-8 border border-black rounded-sm bg-white checked:bg-black checked:border-black focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" onclick="togglePlaceCheckbox(this)" value="${place.name}" id="${place.place_id}">                        
+                                  </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+
+
+                        <div class="m-5 flex flex-col items-start justify-end w-full">
+                            <div class="place-card relative flex bg-white-200 mt-12 mb-12 p-5 shadow border rounded-2xl border-gray-100 shadow-lg" style="width: 800px;">
+                                <div class="ribbon ribbon-top-left"><span>Uber Eats</span></div>
+                                <div class="w-2/5 m-auto">
+                                    <img class="rounded-2xl" src="https://media-cdn.tripadvisor.com/media/photo-s/07/67/b4/74/the-bombay-canteen.jpg" style="width: 256px; height: 240px;"></img>
+                                </div>
+                                <div class="flex flex-col w-3/5 h-42">
+                                    <div class="flex flex-col w-full h-42" >
+                                        <p class="w-full font-bold text-2xl text-gray-900 pl-5 pr-5 ">The Bombay Canteen</p>
+                                        <div class="flex flex-col pl-5 pr-5 ">
+                                            <p class="w-40 text-gray-500">Modern European</p>
+                                            <div class="flex mt-2">
+                                                <p class="ext-xs text-gray-500 mr-3">3</p>
+                                                <div >
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star"></span>
+                                                    <span class="fa fa-star"></span>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="flex w-full">
+                                                <div class="mt-6 mb-2 text-center shadow-lg rounded-3xl text-xl text-white bg-green-400 px-4 py-1">
+                                                    Opened
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+            
+                                    <div class="flex w-full mt-2 pl-5 pr-5">
+                                        <button class="bg-black font-bold text-xl text-white font-regular py-4 px-6 border border-gray-400 rounded-xl shadow">
+                                          ₹125 Book Ride
+                                          </button>
+
+                                          <button onclick="knowMorePage()" class="bg-black font-bold text-xl ml-5 text-white font-regular py-4 px-6 border border-gray-400 rounded-xl shadow">
+                                            Know More
+                                        </button>
                                     </div>
                                 </div>
                                 
@@ -172,23 +228,23 @@
                 </div>
               </div>
   
-              <div class="route-card bg-white-200" style="width: 900px; ;">
+              <div class="route-card bg-white-200 mb-16" style="width: 900px; ;">
                 <div class="flex items-center justify-center flex-1 p-6 bg-purple-50 bg-opacity-0 border rounded-3xl border-gray-100 shadow-2xl">
                     <div class="flex flex-col w-full space-y-4 h-full">
                         <div class="w-full">
                             <div class="flex items-center justify-between flex-1 h-full px-6 py-6 bg-purple-50 rounded-3xl">
-                                <p class="text-4xl font-heavy text-red-400">Breakfast</p>
+                                <p class="text-4xl font-heavy text-red-400">Theatre</p>
                             </div>
                         </div>
                         <div class="m-5 flex flex-col items-start justify-end w-full">
                             <div class="place-card relative flex bg-white-200 mt-12 mb-12 p-5 shadow border rounded-2xl border-gray-100 shadow-lg" style="width: 800px;">
                                 <div class="ribbon ribbon-top-left"><span>Uber Eats</span></div>
                                 <div class="w-2/5 m-auto">
-                                    <img class="rounded-2xl" src="https://images.thrillophilia.com/image/upload/s--XcozMrbO--/c_fill,g_auto,h_600,q_auto,w_975/f_auto,fl_strip_profile/v1/images/photos/000/178/583/original/1573565509_cover.jpg.jpg" style="width: 256px; height: 240px;"></img>
+                                    <img class="rounded-2xl" src="https://upload.wikimedia.org/wikipedia/commons/d/dc/Pvrcinemas_logo.jpg" style="width: 256px; height: 240px;"></img>
                                 </div>
                                 <div class="flex flex-col w-3/5 h-42">
                                     <div class="flex flex-col w-full h-42" >
-                                        <p class="w-full font-bold text-2xl text-gray-900 pl-5 pr-5 ">Taj Hotel</p>
+                                        <p class="w-full font-bold text-2xl text-gray-900 pl-5 pr-5 ">PVR Cinema</p>
                                         <div class="flex flex-col pl-5 pr-5 ">
                                             <p class="w-40 text-gray-500">Modern European</p>
                                             <div class="flex mt-2">
@@ -213,8 +269,73 @@
             
                                     <div class="flex w-full mt-2 pl-5 pr-5">
                                         <button class="bg-black font-bold text-xl text-white font-regular py-4 px-6 border border-gray-400 rounded-xl shadow">
-                                          ₹125 Book Ride
+                                          ₹340 Book Ride
                                           </button>
+                                    </div>
+
+                                    <button onclick="knowMorePage()" class="bg-black font-bold text-xl ml-5 text-white font-regular py-4 px-6 border border-gray-400 rounded-xl shadow">
+                                        Know More
+                                    </button>
+                                </div>
+                                
+                                <div class="pt-2">
+                                  <div class="form-check">
+                                    <input class="form-check-input appearance-none h-8 w-8 border border-black rounded-sm bg-white checked:bg-black checked:border-black focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" onclick="togglePlaceCheckbox(this)" value="${place.name}" id="${place.place_id}">                        
+                                  </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+              </div>
+  
+              <div class="route-card bg-white-200 mb-16" style="width: 900px; ;">
+                <div class="flex items-center justify-center flex-1 p-6 bg-purple-50 bg-opacity-0 border rounded-3xl border-gray-100 shadow-2xl">
+                    <div class="flex flex-col w-full space-y-4 h-full">
+                        <div class="w-full">
+                            <div class="flex items-center justify-between flex-1 h-full px-6 py-6 bg-purple-50 rounded-3xl">
+                                <p class="text-4xl font-heavy text-red-400">Tourist Places</p>
+                            </div>
+                        </div>
+                        <div class="m-5 flex flex-col items-start justify-end w-full">
+                            <div class="place-card relative flex bg-white-200 mt-12 mb-12 p-5 shadow border rounded-2xl border-gray-100 shadow-lg" style="width: 800px;">
+                                <div class="w-2/5 m-auto">
+                                    <img class="rounded-2xl" src="https://www.tourmyindia.com/states/maharashtra/images/gateway-of-india-mumbai1.jpg" style="width: 256px; height: 240px;"></img>
+                                </div>
+                                <div class="flex flex-col w-3/5 h-42">
+                                    <div class="flex flex-col w-full h-42" >
+                                        <p class="w-full font-bold text-2xl text-gray-900 pl-5 pr-5 ">Gateway Of India</p>
+                                        <div class="flex flex-col pl-5 pr-5 ">
+                                            <p class="w-40 text-gray-500">Modern European</p>
+                                            <div class="flex mt-2">
+                                                <p class="ext-xs text-gray-500 mr-3">3</p>
+                                                <div >
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star"></span>
+                                                    <span class="fa fa-star"></span>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="flex w-full">
+                                                <div class="mt-6 mb-2 text-center shadow-lg rounded-3xl text-xl text-white bg-green-400 px-4 py-1">
+                                                    Opened
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+            
+                                    <div class="flex w-full mt-2 pl-5 pr-5">
+                                        <button class="bg-black font-bold text-xl text-white font-regular py-4 px-6 border border-gray-400 rounded-xl shadow">
+                                          ₹340 Book Ride
+                                          </button>
+
+                                          <button onclick="knowMorePage()" class="bg-black font-bold text-xl ml-5 text-white font-regular py-4 px-6 border border-gray-400 rounded-xl shadow">
+                                            Know More
+                                        </button>
                                     </div>
                                 </div>
                                 
@@ -249,7 +370,11 @@
 
     <script>
 
-        
+        function knowMorePage(){
+            let url = new URL(window.location.origin + "/api/place/dighihills");
+            window.open(url, "_self");
+        }
+
         function bookCab(){
             let url = new URL(window.location.origin + "/nextspot/");
             let origin = document.getElementById('origin').value;
@@ -259,6 +384,8 @@
             url.searchParams.append('destination', destination);
             window.open(url, "_self");
         }
+
+    
     </script>
   </body>
 </html>

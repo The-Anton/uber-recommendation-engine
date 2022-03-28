@@ -35,11 +35,12 @@ type="text/javascript"
   }
 
   window.onload = function () {
+    showRecommendationCard()
+
     var startPos;
     var geoOptions = {
       enableHighAccuracy: true,
     };
-
     var geoSuccess = function (position) {
       startPos = position;
       latitude = startPos.coords.latitude;
@@ -62,7 +63,7 @@ type="text/javascript"
 
   function showRecommendationCard(){
       $(function(){
-          $('.slider-card').trigger('click');
+          $('#recommendPlacesButton').trigger('click');
       });
   }
 
@@ -408,7 +409,7 @@ type="text/javascript"
     bottom: 0px;
     height: 0;
     min-width: 100%;
-    overflow: hidden !important;
+    overflow: hidden ;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -454,9 +455,28 @@ type="text/javascript"
 
 </style>
 <script>
+
+var clicked=true;
+
   $(document).ready(function(){
     $("#recommendPlacesButton").click(function () {
       $(".card-body").toggleClass("transition");
     });
+    
+    $(document).ready(function(){
+            $("#recommendPlacesButton").click(function () {
+            if(clicked)
+            {
+                clicked=false;
+                $(".map").css({"height": "40vh"});
+            }
+            else
+            {
+                clicked=true;
+                $(".map").css({"height": "70vh"});
+            }
+            });
+        });
+
   });
 </script>

@@ -34,81 +34,12 @@
                     </div>
 
                     <div id="recommendation_area">
+                        
                         <iframe class="mt-16"src="https://embed.lottiefiles.com/animation/53512"></iframe>
                     </div>
-
                     
-                    <!-- 
-                    <div class="route-card bg-white-200" style="width: 654px; height: 278px;">
-                        <div class="flex items-center justify-center flex-1 p-6 bg-purple-50 bg-opacity-0 border rounded-3xl border-gray-100 shadow-2xl">
-                            <div class="flex flex-col w-full space-y-4 h-full">
-                                <div class="w-full">
-                                    <div class="flex items-center justify-between flex-1 h-full px-6 py-6 bg-purple-50 rounded-3xl">
-                                        <p class="text-xl font-medium text-indigo-600">6 Mar, 2022</p>
-                                        <p class="text-4xl font-heavy text-red-400">$24</p>
-                                    </div>
-                                </div>
-                                <div class="m-5 flex flex-col items-start justify-end w-full">
-                                    <div class="flex">
-                                        
-                                        <div class="m-auto w-5 h-5 bg-white border-2 rounded-full border-red-400"></div>
 
-                                        <div class="mt-2 ml-5 mr-5 flex flex-col space-y-0.5 justify-end ">
-                                            <p class="text-sm font-medium text-gray-400">Pickup location</p>
-                                            <p class="text-base font-medium text-gray-800">Internet city - Business tower</p>
-                                        </div>
-                                    </div>
-                                    <div class="border-2-2 relative border-dashed border-blue-500 h-4 border" style="top: 24.5%; left: 1.5%;"></div>
-
-                                    <div class="flex">
-                                        <img class="m-auto w-5" src="https://img.icons8.com/color/64/000000/marker--v1.png"/>  
-                                        <div class="mb-2 ml-5 mr-5 flex flex-col justify-end">
-                                            <p class="text-sm font-medium text-gray-400">Drop off</p>
-                                            <p class="text-base font-medium text-gray-800">Mall of the Emirates Metro </p>
-                                        </div>
-                                    </div>
-                                    
-                                
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="vertical-line"></div>
-                    <div class="route-card bg-white-200" style="width: 654px; height: 364px;">
-                        <div class="flex items-center justify-center flex-1 p-6 bg-purple-50 bg-opacity-0 border rounded-3xl border-gray-100 shadow-2xl">
-                            <div class="flex flex-col w-full space-y-4 h-full">
-                                <div class="w-full">
-                                    <div class="flex items-center justify-between flex-1 h-full px-6 py-6 bg-purple-50 rounded-3xl">
-                                        <p class="text-xl font-medium text-indigo-600">6 Mar, 2022</p>
-                                        <p class="text-4xl font-heavy text-red-400">$24</p>
-                                    </div>
-                                </div>
-                                <div class="m-5 flex flex-col items-start justify-end w-full">
-                                    <div class="flex">
-                                        
-                                        <div class="m-auto w-5 h-5 bg-white border-2 rounded-full border-red-400"></div>
-
-                                        <div class="mt-2 ml-5 mr-5 flex flex-col space-y-0.5 justify-end ">
-                                            <p class="text-sm font-medium text-gray-400">Pickup location</p>
-                                            <p class="text-base font-medium text-gray-800">Internet city - Business tower</p>
-                                        </div>
-                                    </div>
-                                    <div class="border-2-2 relative border-dashed border-blue-500 h-4 border" style="top: 24.5%; left: 1.5%;"></div>
-
-                                    <div class="flex">
-                                        <img class="m-auto w-5" src="https://img.icons8.com/color/64/000000/marker--v1.png"/>  
-                                        <div class="mb-2 ml-5 mr-5 flex flex-col justify-end">
-                                            <p class="text-sm font-medium text-gray-400">Drop off</p>
-                                            <p class="text-base font-medium text-gray-800">Mall of the Emirates Metro </p>
-                                        </div>
-                                    </div>
-                                    
-        
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                -->
+             
             
             </div>
             <div class="absolute bottom-0 left-0 w-full">
@@ -123,5 +54,11 @@
 
     </main>
 
+    <script>
+        function knowMorePage(){
+            let url = new URL(window.location.origin + "/api/place/dighihills");
+            window.open(url, "_self");
+        }
+    </script>
   </body>
 </html>
