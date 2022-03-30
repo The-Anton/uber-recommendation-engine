@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../components/header/baseImports'); %>
+  <body>
+    <main>
+
+      <div>
+        <div class="text-center pt-24 ml-auto mr-auto" >
+          <img class="m-auto" src="https://pngimg.com/uploads/uber/uber_PNG22.png" style="width: 124px; height: 124px;"></img>
+          <p class="text-5xl m-16">Uber Suggest</p>
+        </div>
+
+        <div class="w-full mt-96 z-105 text-center">
+          <button  onclick="explore()"  id="exploreButton" class=" w-64 h-20 ml-auto mr-auto  w-full bg-black text-white font-regular text-3xl border border-gray-400 shadow">
+            Explore
+          </button>
+        </div>
+      </div>
+
+    </main>
+    <script>
+
+
+      function explore(){
+          let url = new URL(window.location.origin + "/desktop/booking");
+          window.open(url, "_self");
+      }
+
+  
+  </script>
+  </body>
+</html>

@@ -89,6 +89,10 @@ app.get('/', function(req, res) {
   res.render('home');
 });
 
+app.get('/desktop', function(req, res) {
+  res.render('desktop/home');
+});
+
 app.get('/booking', function(req, res) {
   res.render('booking');
 });
