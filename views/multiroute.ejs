@@ -2,18 +2,34 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <%- include('components/multiroutehead'); %>
+    <%- include('components/header/baseImports'); %>
+    <%- include('components/header/mapImports'); %>
+    <%- include('components/header/mobile/multiRoute'); %>
   </head>
   <body>
     <main>
         <div id="map" class="shadow-lg h-full w-full h-full"  style="width: 100%; height: 40vh;">
         </div>
-        <div class="slider-card">
-          <div class="flex flex-col card-body border transition p-8 pt-16">
-            <div id="recommendation_area">
+        <div  class="slider-card">
+          <div id="card-body" class="flex flex-col card-body border transition p-8 pt-16">
+            <div class="flex flex-col">
+              <p class="m-2 ml-auto mr-auto">Your best planned route</p>
+              <div class="flex">
+                <p id="totalTimeArea"></p>
+                <p id="totalDistanceArea"></p>
+              </div>
+            </div>
+            <div id="recommendation_area" class="mb-32">
               <iframe class="mt-16"src="https://embed.lottiefiles.com/animation/53512"></iframe>
             </div>
+            
           </div>
+
+          <div class="absolute fixed bottom-0 left-0 w-full z-105">
+            <button  onclick="bookCab()"  id="bookCabButton" class="h-32 w-full bg-black text-white font-regular text-5xl py-4 px-8 border border-gray-400 shadow">
+                Schedule All Rides
+            </button>
+        </div>
         </div>
     </main>
   </body>

@@ -1,0 +1,79 @@
+<script>
+        function renderFilteredRecommendations(place, type) {
+            let placeImageURL = null;
+            let uberEatsTags = `<div class="ribbon ribbon-top-left"><span>Uber Eats</span></div>`;
+            let imageArray = ["https://images.thrillophilia.com/image/upload/s--XcozMrbO--/c_fill,g_auto,h_600,q_auto,w_975/f_auto,fl_strip_profile/v1/images/photos/000/178/583/original/1573565509_cover.jpg.jpg",
+                              "https://www.sundayguardianlive.com/wp-content/uploads/2020/07/3-Dib-restaurant-losses-edited.jpg",
+                              "https://static.toiimg.com/thumb/68007187/garden.jpg?width=1200&height=900",
+                              "https://images.unsplash.com/photo-1524443169398-9aa1ceab67d5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dGVtcGxlfGVufDB8fDB8fA%3D%3D&w=1000&q=80"]
+
+            
+            if(type == "restaurant"){
+              placeImageURL = imageArray[1];
+            }else if(type == "tourist_attraction"){
+              placeImageURL = imageArray[0];
+              uberEatsTags = ``;
+            }else if(type == "hindu_temple"){
+              placeImageURL = imageArray[3];
+              uberEatsTags = ``;
+            }else if(type == "park"){
+              placeImageURL = imageArray[2];
+              uberEatsTags = ``;
+            }else {
+              placeImageURL = imageArray[0];
+              uberEatsTags = ``;
+            }
+
+            var recommendation_area_html = `<div class="place-card relative flex bg-white-200 mt-5 mb-5 p-2 shadow border rounded-2xl border-gray-100 shadow-lg" style="width: 360px;">
+                                                <div class="ribbon ribbon-top-left"><span>Uber Eats</span></div>
+                                                <div class="w-2/5 m-auto">
+                                                    <img class="rounded-2xl" src="${placeImageURL}0" style="width: 120px; height: 120px;"></img>
+                                                </div >
+                                                <div class="flex flex-col">
+                                                  <div class="flex w-full h-42">
+                                                      <div class="flex flex-col w-11/12 mt-2 h-42" >
+                                                          <p class="w-full font-bold text-xs text-gray-900 pl-2 pr-5 ">${place.name}</p>
+                                                          <div class="flex flex-col pl-2 pr-5 ">
+                                                              <div class="flex mt-2">
+                                                                  <p class="text-gray-500 mr-3">${place.rating}</p>
+                                                                  <div >
+                                                                      <span class="fa fa-star checked"></span>
+                                                                      <span class="fa fa-star checked"></span>
+                                                                      <span class="fa fa-star checked"></span>
+                                                                      <span class="fa fa-star"></span>
+                                                                      <span class="fa fa-star"></span>
+                                                                  </div>
+                                                                  
+                                                              </div>
+                                                              <div class="flex w-full">
+                                                                  <div class="mt-3 mb-2 text-center rounded-3xl text-xs text-white bg-green-500 px-4 py-1">
+                                                                      Opened
+                                                                  </div>
+                                                              </div>
+                                                              
+                                                          </div>
+                                                      </div>
+                              
+                                                      <div class="pt-2">
+                                                          <div class="form-check">
+                                                            <input class="form-check-input appearance-none h-4 w-4 border border-black rounded-sm bg-white checked:bg-black checked:border-black focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" onclick="togglePlaceCheckbox(this)" value="${place.name}" id="${place.place_id}">                        
+                                                          </div>
+                                                        </div>
+                                                  </div>
+  
+                                                  <div class="flex w-full ml-2">
+                                                      <button class="bg-black text-xs px-2 py-2 text-white px-2 font-regular rounded-3xl border  shadow">
+                                                        ₹125 Book Ride
+                                                        </button>
+              
+                                                        <button onclick="knowMorePage()" class="text-xs bg-black px-2  py-2 ml-2 text-white rounded-3xl font-regular shadow">
+                                                          Know More
+                                                      </button>
+                                                  </div>
+                                                </div>`
+                                                + uberEatsTags + `</div>`;
+
+            document.getElementById("recommendation_area").innerHTML +=
+              recommendation_area_html;
+          }
+</script>

@@ -1,0 +1,101 @@
+<meta charset="UTF-8" />
+<title>Uber</title>
+
+
+<style>
+
+  html, body {
+    font-family: 'Quicksand';
+    height: 100%;                                           
+  }
+
+
+  i {
+    color: blue;
+    margin-left: 20px;
+  }
+
+  .arrow1 {
+    animation: slide1 1s ease-in-out infinite;
+    margin-left: 9px;
+  }
+
+  @keyframes slide1 {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+
+    50% {
+      transform: translate(10px, 0);
+    }
+  }
+
+
+
+  .slider-card {
+    border-radius:.35rem;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+  }
+  
+  .card-body {
+    position: fixed;
+    bottom: 0px;
+    height: 6%;
+    min-width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    transition: top 1s;
+    border-top-right-radius:30px;
+    border-top-left-radius:30px;
+    transition: all 1s;
+    cursor: pointer;
+  }
+  
+  .card-text {
+    color: #2b0099;
+    height: 100px;
+  }
+  
+  .card-body.transition {
+      height: 70%;
+      overflow-y: scroll;
+      transition: all 1s;
+  }
+
+  .vertical-line{
+      display: inline-block;
+      border-left: 2px solid rgb(153, 152, 152);
+      margin: 0 10px;
+      height: 125px;
+      z-index: -1000;
+  }
+
+    @media(min-width: 524px){
+      .vertical-line{
+          display: inline-block;
+          border-left: 2px solid rgb(153, 152, 152);
+          margin: 0 10px;
+          height: 160px;
+          z-index: -1000;
+      }
+    }
+  
+
+</style>
+
+<script>
+  $(document).ready(function(){
+    $(".slider-card").click(function () {
+      $(".card-body").toggleClass("transition");
+    });
+  });
+
+
+</script>

@@ -1,0 +1,370 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../components/header/baseImports'); %>
+    <%- include('../components/header/mapImports'); %>
+    <%- include('../components/header/pointRecommendation'); %>
+    <%- include('../components/header/desktop/singleRoute'); %>
+
+    <style>
+        #floater{
+            position: absolute;
+            top : 15%;
+            left: 15%;
+            width: 21%;
+            height: 80%;
+            background-color: white;
+            z-index: 1;
+        }
+
+        #textInputArea{
+            height: 27%;
+        }
+
+        #recommendation_area{
+            overflow-y: scroll;
+            height: 575px;
+        }
+
+        .scroll {
+            height: 432px;
+            width: 400px;
+            overflow-y: scroll;
+        }
+
+        .scroll--simple::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+        }
+        .scroll--simple::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background: rgba(0, 0, 0, 0.1);
+        }
+        .scroll--simple::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background: rgba(0, 0, 0, 0.2);
+        }
+        .scroll--simple::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 0, 0, 0.4);
+        }
+        .scroll--simple::-webkit-scrollbar-thumb:active {
+        background: rgba(0, 0, 0, 0.9);
+        }
+        html,
+        body {
+          font-family: "Quicksand";
+          height: 100%;
+        }
+      
+        i {
+          color: blue;
+          margin-left: 20px;
+        }
+      
+        .map {
+          z-index: -1 !important;
+        }
+        .arrow1 {
+          animation: slide1 1s ease-in-out infinite;
+          margin-left: 9px;
+        }
+      
+        @keyframes slide1 {
+          0%,
+          100% {
+            transform: translate(0, 0);
+          }
+      
+          50% {
+            transform: translate(10px, 0);
+          }
+        }
+      
+
+      
+        .card-body {
+          position: fixed;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          background-color: white;
+          transition: top 1s;
+          transition: all 1s;
+          z-index: 0;
+        }
+      
+        .card-text {
+          color: #2b0099;
+          height: 100px;
+        }
+  
+        .route-card {
+          display: inline-block;
+
+          z-index: 1;
+        }
+      
+        .place-card {
+          z-index: 2;
+        }
+      
+        .circular-button{
+            border-radius: 30px;
+            padding: 10px 12px;
+            background-color: rgb(238, 238, 238)
+        }
+
+        #bookCabButton {
+          z-index: 3;
+        }
+        .vertical-line {
+          display: inline-block;
+          border-left: 2px solid rgb(153, 152, 152);
+          margin: 0 10px;
+          height: 125px;
+          z-index: -1000;
+        }
+      
+        @media (min-width: 524px) {
+          .vertical-line {
+            display: inline-block;
+            border-left: 2px solid rgb(153, 152, 152);
+            margin: 0 10px;
+            height: 160px;
+            z-index: -1000;
+          }
+        }
+      
+        .ribbon {
+          width: 110px;
+          height: 110px;
+          overflow: hidden;
+          position: absolute;
+        }
+        .ribbon::before,
+        .ribbon::after {
+          position: absolute;
+          z-index: -1;
+          content: "";
+          display: block;
+          border: 5px solid #3fc060;
+        }
+        .ribbon span {
+          position: absolute;
+          display: block;
+          width: 180px;
+          padding: 8px 0;
+          background-color: #3fc060;
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+          color: #fff;
+          font: 700 12px/1 "Lato", sans-serif;
+          text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+          text-transform: uppercase;
+          text-align: center;
+        }
+      
+        /* top left*/
+        .ribbon-top-left {
+          top: -10px;
+          left: -10px;
+        }
+        .ribbon-top-left::before,
+        .ribbon-top-left::after {
+          border-top-color: transparent;
+          border-left-color: transparent;
+        }
+        .ribbon-top-left::before {
+          top: 0;
+          right: 0;
+        }
+        .ribbon-top-left::after {
+          bottom: 0;
+          left: 0;
+        }
+        .ribbon-top-left span {
+          right: -25px;
+          top: 30px;
+          transform: rotate(-45deg);
+        }
+
+        .circular-button{
+            border-radius: 30px;
+            padding: 10px 12px;
+            background-color: rgb(238, 238, 238)
+        }
+
+    </style>
+  </head>
+  <body>
+    <main>
+        <div>
+
+          <div id="map" class="shadow-lg h-full w-full"  style="width: 100%; height: 100vh;">
+          </div>
+            <div id="floater" class="rounded-lg shadow-xl">
+                <div class="flex flex-col">
+                  <h1 class="text-xl mt-5 mb-5 ml-auto mr-auto">Places to visit next</h1>
+                  <div class="flex ml-auto mr-auto">
+                    <button
+                      id="pointSuggestionButton"
+                      class="m-1 circular-button text-xs  bg-blue-500 text-white font-bold "
+                    >
+                      Next to Destination
+                    </button>
+                    <button
+                      id="routeSuggestionButton"
+                      class="m-1 circular-button text-xs  bg-blue-500 text-white font-bold"
+                      onclick="renderAllRouteRecommendation()"
+                    >
+                      Around Route
+                    </button>
+                  </div>
+                  <div class="flex ml-auto mr-auto">
+                    <button
+                      id="restaurantButton"
+                      class="m-1 circular-button text-xs  text-black bg-white-400 hover:bg-black hover:text-white"
+                      onclick="filterPlaces('restaurant')"
+                    >
+                      Resturant
+                    </button>
+        
+                    <button
+                      id="touristButton"
+                      class="m-1 circular-button text-xs  text-black bg-white-400 hover:bg-black hover:text-white"
+                      onclick="filterPlaces('tourist_attraction')"
+                    >
+                      Tourist Place
+                    </button>
+        
+                    <button
+                      id="religiousButton"
+                      class="m-1 circular-button text-xs  text-black bg-white-400 hover:bg-black hover:text-white"
+                      onclick="filterPlaces('hindu_temple')"
+                    >
+                      Religious
+                    </button>
+        
+                    <button
+                      id="gardenButton"
+                      class="m-1 circular-button text-xs  text-black bg-white-400 hover:bg-black hover:text-white"
+                      onclick="filterPlaces('park')"
+                    >
+                      Garden
+                    </button>
+                </div>
+                <div id="recommendation_area" class="scroll scroll--simple" >
+                
+                  <iframe
+                    class="ml-auto mr-auto mt-8"
+                    src="https://embed.lottiefiles.com/animation/53512"
+                  ></iframe>
+                </div>
+
+
+              <div class="absolute bottom-0 left-0 w-full">
+                <button
+                  onclick="showBestRoute()"
+                  class="h-12 w-full bg-black text-white font-regular text-xl border border-gray-400 shadow"
+                >
+                  Show best route
+                </button>
+              </div>
+            </div>
+        </div>
+
+
+    </main>
+
+
+
+    <script>
+      var selectedPlaces = [];
+      var resultedPlaces = [];
+
+      function togglePlaceCheckbox(element) {
+        if (
+          element.checked &&
+          !(selectedPlaces.filter((place) => place.place_id == element.id) > 0)
+        ) {
+          addPlaceToQueue(element.value, element.id);
+        }
+
+      if(!element.checked){
+        for(let i=0; i<selectedPlaces.length; i++){
+          let footerId = selectedPlaces[i].place_id + 'footer';
+
+          if(selectedPlaces[i].place_id == element.id){
+            selectedPlaces.splice(i,1);
+            document.getElementById(footerId).innerHTML = "";
+          }
+          }
+        }
+
+        for(let i=0; i<selectedPlaces.length; i++){
+          let footerId = selectedPlaces[i].place_id + 'footer';
+          if(i==selectedPlaces.length-1 ){
+            document.getElementById(footerId).innerHTML = `<div> This is selected as your destination </div>`;
+          }else{
+            document.getElementById(footerId).innerHTML = `<div> This is selected as your checkpoint </div>`;
+          }
+        }
+      
+      }
+
+      function addPlaceToQueue(name, id) {
+        let placeObject = {
+          name: name,
+          place_id: id,
+        };
+        selectedPlaces.push(placeObject);
+
+        for(let i=0; i<selectedPlaces.length; i++){
+          let footerId = selectedPlaces[i].place_id + 'footer';
+          if(i==selectedPlaces.length-1 ){
+            document.getElementById(footerId).innerHTML = `<div> This is selected as your destination </div>`;
+          }else{
+            document.getElementById(footerId).innerHTML = `<div> This is selected as your checkpoint </div>`;
+          }
+        }
+      }
+
+      function knowMorePage() {
+        let url = new URL(window.location.origin + "/api/place/dighihills");
+        window.open(url, "_self");
+      }
+
+      function showBestRoute() {
+        var selectedPlacesString = selectedPlaces
+          .map((place) => {
+            return (place.name + "^" + place.place_id).toString();
+          })
+          .join("|");
+
+          const queryParams = window.location.search;
+          let urlParams = new URLSearchParams(queryParams);
+          let origin = urlParams.get("origin");
+          let destination = urlParams.get("destination");
+        window.open(
+          window.location.origin +
+            "/desktop/multiroute/?places=" +
+            JSON.stringify(selectedPlacesString) + "&origin="+ origin + "&destination=" + destination,
+          "_self"
+        );
+      }
+    </script>
+
+
+    <script>
+
+    var clicked=true;
+    
+      $(document).ready(function(){
+        $("#recommendPlacesButton").click(function () {
+          $(".card-body").toggleClass("transition");
+        });
+
+      });
+    </script>
+  </body>
+</html>

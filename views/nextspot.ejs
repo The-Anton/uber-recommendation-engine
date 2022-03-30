@@ -1,64 +1,161 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <%- include('components/twospothead'); %>
+    <%- include('components/header/baseImports'); %>
+    <%- include('components/header/mapImports'); %>
+    <%- include('components/header/pointRecommendation'); %>
+    <%- include('components/header/mobile/singleRoute'); %>
   </head>
   <body>
     <main>
-        <div id="map" class="shadow-lg h-full w-full h-6/12"  style="width: 100%; height: 40vh;">
+      <div
+        id="map"
+        class="shadow-lg h-full w-full h-6/12"
+        style="width: 100%; height: 40vh"
+      ></div>
+
+      <div class="slider-card">
+        <div class="flex flex-col card-body border transition p-8 pt-16">
+          <h1 class="text-3xl mt-5 mb-5 ml-1 mr-1">Places to visit next</h1>
+          <div class="flex">
+            <button
+              id="pointSuggestionButton"
+              class="m-5 text-xl xshadow-lg bg-blue-500 rounded-3xl text-white font-bold px-4 py-2"
+            >
+              Next to Destination
+            </button>
+            <button
+              id="routeSuggestionButton"
+              class="m-5 text-xl xshadow-lg bg-blue-500 rounded-3xl text-white font-bold px-4 py-2"
+              onclick="renderAllRouteRecommendation()"
+            >
+              Around Route
+            </button>
+            <button
+              id="restaurantButton"
+              class="m-5 text-xl shadow-lg rounded-3xl text-black bg-white-400 px-4 py-2 hover:bg-black hover:text-white"
+              onclick="filterPlaces('restaurant')"
+            >
+              Resturant
+            </button>
+
+            <button
+              id="touristButton"
+              class="m-5 text-xl shadow-lg rounded-3xl text-black bg-white-400 px-4 py-2 hover:bg-black hover:text-white"
+              onclick="filterPlaces('tourist_attraction')"
+            >
+              Tourist Place
+            </button>
+
+            <button
+              id="religiousButton"
+              class="m-5 text-xl shadow-lg rounded-3xl text-black bg-white-400 px-4 py-2 hover:bg-black hover:text-white"
+              onclick="filterPlaces('hindu_temple')"
+            >
+              Religious
+            </button>
+
+            <button
+              id="gardenButton"
+              class="m-5 text-xl shadow-lg rounded-3xl text-black bg-white-400 px-4 py-2 hover:bg-black hover:text-white"
+              onclick="filterPlaces('park')"
+            >
+              Garden
+            </button>
         </div>
 
-        <div class="slider-card">
-            <div class="flex flex-col card-body border transition p-8 pt-16">
-                <h1 class="text-3xl m-5">Places to visit next</h1>
-                    <div class="flex">
-                        <div id="suggestionButton" class="m-5 text-xl xshadow-lg bg-slate-300 rounded-3xl text-white font-bold px-4 py-2">
-                            Suggestion
-                        </div>
-                        <div id="restaurantButton" class="m-5 text-xl shadow-lg rounded-3xl text-black bg-white-400 px-4 py-2" onclick="renderRestaurants()">
-                            Resturant
-                        </div>
-
-                        <div id="touristButton" class="m-5 text-xl shadow-lg rounded-3xl text-black bg-white-400 px-4 py-2" onclick="renderTouristPlaces()">
-                            Tourist Place
-                        </div>
-
-                        <div id="religiousButton" class="m-5 text-xl shadow-lg rounded-3xl text-black bg-white-400 px-4 py-2" onclick="renderReligiousPlaces()">
-                            Religious
-                        </div>
-
-                        <div id="gardenButton" class="m-5 text-xl shadow-lg rounded-3xl text-black bg-white-400 px-4 py-2" onclick="renderGardernPlaces()">
-                            Garden
-                        </div>
-                    </div>
-
-                    <div id="recommendation_area">
-                        
-                        <iframe class="mt-16"src="https://embed.lottiefiles.com/animation/53512"></iframe>
-                    </div>
-                    
-
-             
-            
-            </div>
-            <div class="absolute bottom-0 left-0 w-full">
-                <button  onclick="showBestRoute()" class="h-32 w-full bg-black text-white font-regular text-5xl py-4 px-8 border border-gray-400 shadow">
-                    Show best route
-                </button>
-            </div>
+          <div id="recommendation_area" class="pb-24">
+            <iframe
+              class="mt-16"
+              src="https://embed.lottiefiles.com/animation/53512"
+            ></iframe>
+          </div>
         </div>
-
-
-        
-
+        <div class="absolute bottom-0 left-0 w-full">
+          <button
+            onclick="showBestRoute()"
+            class="h-32 w-full bg-black text-white font-regular text-5xl py-4 px-8 border border-gray-400 shadow"
+          >
+            Show best route
+          </button>
+        </div>
+      </div>
     </main>
 
     <script>
-        function knowMorePage(){
-            let url = new URL(window.location.origin + "/api/place/dighihills");
-            window.open(url, "_self");
+      var selectedPlaces = [];
+      var resultedPlaces = [];
+
+      function togglePlaceCheckbox(element) {
+        if (
+          element.checked &&
+          !(selectedPlaces.filter((place) => place.place_id == element.id) > 0)
+        ) {
+          addPlaceToQueue(element.value, element.id);
         }
+
+      if(!element.checked){
+        for(let i=0; i<selectedPlaces.length; i++){
+          let footerId = selectedPlaces[i].place_id + 'footer';
+
+          if(selectedPlaces[i].place_id == element.id){
+            selectedPlaces.splice(i,1);
+            document.getElementById(footerId).innerHTML = "";
+          }
+          }
+        }
+
+        for(let i=0; i<selectedPlaces.length; i++){
+          let footerId = selectedPlaces[i].place_id + 'footer';
+          if(i==selectedPlaces.length-1 ){
+            document.getElementById(footerId).innerHTML = `<div> This is selected as your destination </div>`;
+          }else{
+            document.getElementById(footerId).innerHTML = `<div> This is selected as your checkpoint </div>`;
+          }
+        }
+      
+      }
+
+      function addPlaceToQueue(name, id) {
+        let placeObject = {
+          name: name,
+          place_id: id,
+        };
+        selectedPlaces.push(placeObject);
+
+        for(let i=0; i<selectedPlaces.length; i++){
+          let footerId = selectedPlaces[i].place_id + 'footer';
+          if(i==selectedPlaces.length-1 ){
+            document.getElementById(footerId).innerHTML = `<div> This is selected as your destination </div>`;
+          }else{
+            document.getElementById(footerId).innerHTML = `<div> This is selected as your checkpoint </div>`;
+          }
+        }
+      }
+
+      function knowMorePage() {
+        let url = new URL(window.location.origin + "/api/place/dighihills");
+        window.open(url, "_self");
+      }
+
+      function showBestRoute() {
+        var selectedPlacesString = selectedPlaces
+          .map((place) => {
+            return (place.name + "^" + place.place_id).toString();
+          })
+          .join("|");
+
+          const queryParams = window.location.search;
+          let urlParams = new URLSearchParams(queryParams);
+          let origin = urlParams.get("origin");
+          let destination = urlParams.get("destination");
+        window.open(
+          window.location.origin +
+            "/multiroute/?places=" +
+            JSON.stringify(selectedPlacesString) + "&origin="+ origin + "&destination=" + destination,
+          "_self"
+        );
+      }
     </script>
   </body>
 </html>

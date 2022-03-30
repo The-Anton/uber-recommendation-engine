@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <%- include('components/head'); %>
-  </head>
+    <%- include('components/header/baseImports'); %>
   <body>
     <main>
 
-        <div class="text-center mt-96 ml-auto mr-auto" >
-                <img class="m-auto" src="https://pngimg.com/uploads/uber/uber_PNG22.png" style="width: 124px; height: 124px;"></img>
-                <p class="text-6xl m-16">Uber Suggest</p>
+      <div>
+        <div class="text-center pt-96 lg:pt-52 ml-auto mr-auto" >
+          <img class="m-auto" src="https://pngimg.com/uploads/uber/uber_PNG22.png" style="width: 124px; height: 124px;"></img>
+          <p class="text-6xl m-16">Uber Suggest</p>
         </div>
-     
+
         <div class="absolute bottom-0 left-0 w-full z-105">
-          <button  onclick="explore()"  id="exploreButton" class="h-32 w-full bg-black text-white font-regular text-5xl py-4 px-8 border border-gray-400 shadow">
+          <button  onclick="explore()"  id="exploreButton" class="h-32 lg:h-24 w-full bg-black text-white font-regular text-5xl py-4 px-8 border border-gray-400 shadow">
             Explore
           </button>
         </div>
+      </div>
+
     </main>
     <script>
 
