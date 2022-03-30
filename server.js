@@ -9,6 +9,15 @@ const fileUpload = require('express-fileupload');
 const rateLimit = require('express-rate-limit');
 const path = require('path');
 
+
+const mongoose              =  require("mongoose"),
+      passport              =  require("passport"),
+      bodyParser            =  require("body-parser"),
+      LocalStrategy         =  require("passport-local"),
+      passportLocalMongoose =  require("passport-local-mongoose"),
+      User                  =  require("./auth/model");
+
+
 // load env variables
 
 
@@ -26,6 +35,16 @@ const app = express();
 
 const place = require('./api/place/index.js');
 const nearby = require('./api/nearby/index.js');
+const auth = require('./auth/index.js');
+
+app.use(require("express-session")({
+  secret:"Any normal Word",       //decode or encode session
+  resave: false,          
+  saveUninitialized:false    
+}));
+passport.serializeUser(User.serializeUser());       //session encoding
+passport.deserializeUser(User.deserializeUser());   //session decoding
+passport.use(new LocalStrategy(User.authenticate()));
 
 app.use(express.json());
 // sanitize Data
@@ -51,15 +70,19 @@ app.use(cors());
 
 app.options('*', cors());
 
-// file Upload
-app.use(fileUpload());
 
 // Use Routes
 app.use('/api/place', place);
 app.use('/api/nearby', nearby);
-
+app.use('/auth', auth);
 // set the view engine to ejs
 app.set('view engine', 'ejs');
+
+app.use(bodyParser.urlencoded(
+  { extended:true }
+))
+app.use(passport.initialize());
+app.use(passport.session());
 
 // index page
 app.get('/', function(req, res) {
@@ -72,6 +95,17 @@ app.get('/booking', function(req, res) {
 
 app.get('/nextspot', function(req, res) {
   res.render('nextspot');
+});
+
+
+
+
+app.get('/desktop/booking', function(req, res) {
+  res.render('desktop/booking');
+});
+
+app.get('/desktop/nextspot', function(req, res) {
+  res.render('desktop/nextspot');
 });
 
 app.get('/multiroute', function(req, res) {
@@ -89,19 +123,10 @@ app.get('/multiroute', function(req, res) {
   res.render('multiroute', {places: req.query.places});
 });
 
-app.get('/login', function(req, res) {
-  res.render('login');
-});
+app.get('/desktop/multiroute', function(req, res) {
 
-app.get('/signup', function(req, res) {
-  res.render('signup');
+  res.render('desktop/multiroute', {places: req.query.places});
 });
-
-app.get('/explore', function(req, res) {
-    res.render('explore');
-});
-  
-
 app.use(errorHandler);
 const PORT = process.env.PORT || 5000;
 
