@@ -3,7 +3,7 @@ let ACTION_TIME_MAPPING = {
     "early-morning": ["hiking", "hindu_temple", "mosque", "church", "park", "gym"],
     "late-morning": ["hiking", "hindu_temple", "mosque", "church", "park", "gym"],
     "early-afternoon": ["restaurant", "meal_delivery", "food"],
-    "late-afternoon":["restaurant", "meal_delivery", "food"],
+    "late-afternoon":["restaurant", "meal_delivery", "food","movie_theater"],
     "early-evening": ["movie_theater"],
     "late-evening": ["park", "gym", "movie_theater"],
     "early-night": ["restaurant", "cafe", "movie_theater"],
@@ -15,16 +15,16 @@ function getCurrentAction(){
     let currentHour = time.getHours();
   
     console.log(currentHour);
-    if(currentHour > 5 && currentHour < 9) return "early-morning";
-    if(currentHour > 9 && currentHour < 12) return "late-morning";
-    if(currentHour > 12 && currentHour < 14) return "early-afternoon";
-    if(currentHour > 14 && currentHour < 16) return "late-afternoon";
-    if(currentHour > 16 && currentHour < 18) return "early-evening";
-    if(currentHour > 18 && currentHour < 19) return "late-evening";
-    if(currentHour > 19 && currentHour < 21) return "early-night";
-    if(currentHour > 21 && currentHour < 24) return "late-night";
+    // if(currentHour > 5 && currentHour < 9) return "early-morning";
+    // if(currentHour > 9 && currentHour < 12) return "late-morning";
+    // if(currentHour > 12 && currentHour < 14) return "early-afternoon";
+    // if(currentHour > 14 && currentHour < 16) return "late-afternoon";
+    // if(currentHour > 16 && currentHour < 18) return "early-evening";
+    // if(currentHour > 18 && currentHour < 19) return "late-evening";
+    // if(currentHour > 19 && currentHour < 21) return "early-night";
+    // if(currentHour > 21 && currentHour < 24) return "late-night";
 
-    return "early-afternoon";
+    return "late-afternoon";
 
 }
 
@@ -36,14 +36,19 @@ function getCombinedBestTasks(){
     return comibinedTaskQuery;
 }
 
-function getRecommendationForLocation(latitude,longitude,range) {
+function getRecommendationForLocation(placeId, latitude,longitude,range) {
 
     return new Promise((resolve,reject) => {
+
         let currentAction = getCurrentAction();
         let multipleTask = ACTION_TIME_MAPPING[currentAction];
         let comibinedTaskQuery = multipleTask.join('|');
-
-        let url = new URL(window.location.origin + `/api/nearby/query?latitude=${latitude}&longitude=${longitude}&type=${comibinedTaskQuery}&range=${range}`);
+        let url = "";
+        if(placeId == null){
+            url = new URL(window.location.origin + `/api/nearby/query/location?latitude=${latitude}&longitude=${longitude}&type=${comibinedTaskQuery}&range=${range}`);
+        }else{
+            url = new URL(window.location.origin + `/api/nearby/query/placeid?latitude=${latitude}&longitude=${longitude}&type=${comibinedTaskQuery}&range=${range}&placeid=${placeId}`);
+        }
 
         axios.get(url)
         .then(function (response) {

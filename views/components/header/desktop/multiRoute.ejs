@@ -112,10 +112,7 @@
 
       const queryParams = window.location.search;
       let urlParams = new URLSearchParams(queryParams);
-      let origin = "Army institute of technology"; //urlParams.get("origin");
-      let destination = "Army institute of technology"; //urlParams.get("destination");
 
-      
       var placesString = '<%- places %>';
       placesString = placesString.slice(1,-1);
       var place = placesString.split('|')
@@ -125,6 +122,9 @@
 
                             return {"name": placeName, "place_id": placeId}
                           })
+                          
+      let origin = urlParams.get("origin");
+      let destination = place[place.length-1].name; 
 
       console.log(place);
       selectedPlaces = place;

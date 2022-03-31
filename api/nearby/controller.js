@@ -925,34 +925,68 @@ const results = [
   }
 ]
 
-const getNearbyRecommendation = asyncHandler(async (req,res) => {
+const getNearbyRecommendationByPlaceID = asyncHandler(async (req,res) => {
   let searchQuery = req.query
   let latitude = searchQuery.latitude;
   let longitude = searchQuery.longitude;
   let range = searchQuery.range;
   let type = searchQuery.type;
+  let placeId = searchQuery.placeid;
 
-  var config = {
-    method: 'get',
-    url: `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=${range}&type="${type}"&key=AIzaSyCATtupoIdp7bend_fjJmKy52HLRxSz_oA`,
-    headers: { }
-  };
+  axios.get(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${placeId}&key=AIzaSyCATtupoIdp7bend_fjJmKy52HLRxSz_oA`)
+  .then(async (response)=> {
+    var config = {
+        method: 'get',
+        url: `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${response.data.result.geometry.location.lat},${response.data.result.geometry.location.lng}&radius=${range}&type=${type}&key=AIzaSyCATtupoIdp7bend_fjJmKy52HLRxSz_oA`,
+        headers: { }
+      };
+    
+      //res.send(results);
+    
+      await axios(config)
+      .then((response) => {
+         res.send(response.data.results);
+      })
+      .catch(function (error) {
+        console.log(error);
+        res.status(500).send(error);
+      });
+  })
+  .then((data) => res.status(200).send(data))
+  .catch(function (err) {
+    console.log("Fetch Error :-S", err);
+  });
 
-  res.send(results);
+  
 
-  // await axios(config)
-  // .then((response) => {
-  //   console.log(response.data);
-  //    res.send(response.data.results);
-  // })
-  // .catch(function (error) {
-  //   console.log(error);
-  //   res.status(500).send(error);
-  // });
       
 })
 
+const getNearbyRecommendationByPlaceLocation = asyncHandler(async (req,res) => {
+    let searchQuery = req.query
+    let latitude = searchQuery.latitude;
+    let longitude = searchQuery.longitude;
+    let range = searchQuery.range;
+    let type = searchQuery.type;
+
+      var config = {
+          method: 'get',
+          url: `https://maps.googleapis.com/maps/api/place/nearbysearch/json?radius=${range}&type=${type}&location=${latitude},${longitude}&key=AIzaSyCATtupoIdp7bend_fjJmKy52HLRxSz_oA`,
+          headers: { }
+        };
+      
+        //res.send(results);
+        await axios(config)
+        .then((response) => {
+           res.send(response.data.results);
+        })
+        .catch(function (error) {
+          console.log(error);
+          res.status(500).send(error);
+        });
+  })
 
 module.exports = {
-  getNearbyRecommendation
+  getNearbyRecommendationByPlaceID,
+  getNearbyRecommendationByPlaceLocation
 }

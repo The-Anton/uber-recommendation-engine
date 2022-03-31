@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('components/header/head'); %>
+  </head>
+  <body>
+    <main>
+    </main>
+
+
+
+    <div class="pt-16 w-6/12 mr-auto ml-auto">
+        
+        <div id="upper-content"></div>
+
+
+        <div class="flex-grow w-full">
+            <div class="mx-auto w-full ">
+              <div class="my-8">
+                <div class="flex justify-between items-center m-16 mb-4">
+                  <h2 class="text-3xl font-medium">
+                    Reviews
+                    <a href="#" class=""
+                      ><span
+                        class="text-salmon font-medium text-lg ml-2 hover:underline"
+                        >See all
+                      </span></a
+                    >
+                  </h2>
+                  <div>
+                    <button
+                      class="cursor-pointer text-xl mx-1 text-indigo-600 font-bold"
+                    >
+                      <<
+                    </button>
+                    <button
+                      class="cursor-pointer text-xl mx-1 text-indigo-600 font-bold"
+                    >
+                      >>
+                    </button>
+                  </div>
+                </div>
+                <div 
+                  id="scrollContainer"
+                  class="flex flex-no-wrap p-5 overflow-x-scroll scrolling-touch items-start mb-8"
+                >
+              </div>
+            </div>
+          </div>
+
+    </div>
+
+    <script>
+
+      const queryParams = window.location.search;
+      let urlParams = new URLSearchParams(queryParams);
+      let placeName = urlParams.get("name");
+      let placeId = urlParams.get("placeid");
+
+
+      serpapiContent(placeName);
+      googleMapsContent(placeId);
+
+        function getYouTubeEmbedLink(raw_link){
+            let videoId = raw_link.split('=')[1];
+            return `https://www.youtube.com/embed/${videoId}`;
+        }
+
+
+        function serpapiContent(searchQuery){
+        let url = new URL(window.location.origin + `/api/place/media/serpapi?query=${searchQuery}`);
+
+          axios.get(url)
+          .then((response)=> {
+              let mainVideoEmbedUrl = getYouTubeEmbedLink(response.data.inline_videos[0].link);
+
+                document.getElementById('upper-content').innerHTML += `<div class="text-center m-5 ">
+                    <h2 class="text-3xl font-bold">${response.data.knowledge_graph.title}</h2>
+                </div>
+
+                <div class="mt-5 mb-5">
+                    <iframe class="m-auto rounded-lg" width="80%" height="354px" src="${mainVideoEmbedUrl}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+
+
+                <div class="flex  text-center">
+                    <img class="m-auto rounded-2xl w-5/12 h-42" src="${response.data.inline_images[0].thumbnail}" ></img>
+                    <img class="m-auto rounded-2xl w-5/12 h-42" src="${response.data.inline_images[1].thumbnail}" ></img>
+
+                </div>`
+          })
+          .catch(function (err) {
+            console.log("Fetch Error :-S", err);
+          });
+        }
+
+
+
+
+        function googleMapsContent(placeId){
+          let url = new URL(window.location.origin + `/api/place/media/googlemaps?placeid=${placeId}`);
+
+          axios.get(url)
+          .then((response)=> {
+              console.log(response.data.result.reviews);
+                for(let i=0; i<response.data.result.reviews.length; i++){
+                    document.getElementById('scrollContainer').innerHTML = `<div class="flex-none w-2/3 md:w-2/3 mr-8 md:pb-4 border rounded-2xl shadow-xl">
+                                    <a href="#" class="space-y-4">
+                                    <div class="px-4 py-2">
+                                        <div class="text-lg leading-6 font-medium space-y-1">
+                                        <h3 class="font-bold text-gray-800 text-3xl mb-2">
+                                            ${response.data.result.reviews[i].author_name}
+                                        </h3>
+                                        </div>
+                                        <div class="flex mt-2">
+                                            <p class="ext-xs text-gray-500 mr-3">${response.data.result.reviews[i].rating}</p>
+                                            <div >
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star checked"></span>
+                                                <span class="fa fa-star"></span>
+                                                <span class="fa fa-star"></span>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="text-lg">
+                                        <p class="">
+                                            ${response.data.result.reviews[i].text}
+                                        </p>
+                                        </div>
+                                    </div>
+                                    </a>
+            
+                                </div>`
+                }
+          })
+          .catch(function (err) {
+            console.log("Fetch Error :-S", err);
+          });
+        }
+
+        function bookCab(){
+            let url = new URL(window.location.origin + "/desktop/nextspot/");
+            let origin = document.getElementById('origin').value;
+            let destination = document.getElementById('destination').value;
+
+            url.searchParams.append('origin', origin);
+            url.searchParams.append('destination', destination);
+            window.open(url, "_self");
+        }
+
+    </script>
+  </body>
+</html>

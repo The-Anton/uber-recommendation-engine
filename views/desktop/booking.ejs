@@ -5,6 +5,9 @@
     <%- include('../components/header/baseImports'); %>
     <%- include('../components/header/mapImports'); %>
     <%- include('../components/header/desktop/booking'); %>
+    <%- include('../components/header/pointRecommendation'); %>
+
+    <link href="/css/navbar.css" rel="stylesheet" type="text/css">
 
     <style>
         #floater{
@@ -23,7 +26,7 @@
 
         #recommendation_area{
             overflow-y: scroll;
-            height: 432px;
+            height: 535px;
         }
 
         .scroll {
@@ -52,7 +55,7 @@
         }
         html,
         body {
-          font-family: "Quicksand";
+          font-family: "Montserrat", "Quicksand";
           height: 100%;
         }
       
@@ -198,7 +201,28 @@
   </head>
   <body>
     <main>
+      <div class="header">
+        <div class="header__container">
+          <div class="header__left">
+            <a href="#">
+              <svg style="display:block;width:auto;height:20px;" viewBox="0 0 154 52" width="auto"><path d="M8.088 31.704c0 8.136 5.328 13.392 12.384 13.392 6.984 0 12.384-5.4 12.384-13.392V.6h7.56V51h-7.488v-4.68c-3.384 3.528-8.064 5.544-13.32 5.544-10.8 0-19.08-7.848-19.08-19.728V.6h7.56v31.104zM47.832 51V.6h7.272v18.36a18.156 18.156 0 0 1 13.032-5.472c10.8 0 19.296 8.568 19.296 19.224 0 10.584-8.496 19.152-19.296 19.152-5.112 0-9.792-2.088-13.104-5.472V51h-7.2zm7.128-18.288c0 7.056 5.616 12.744 12.672 12.744 6.912 0 12.6-5.688 12.6-12.744 0-7.128-5.688-12.744-12.6-12.744-6.984 0-12.672 5.616-12.672 12.744zm36.792-.072c0-10.368 8.136-19.08 18.864-19.08 10.584 0 18.36 8.136 18.36 19.08v2.376h-29.88c1.008 5.976 5.976 10.44 12.168 10.44 4.248 0 7.848-1.728 10.584-5.4l5.256 3.888c-3.672 4.896-9.144 7.848-15.84 7.848-11.016 0-19.512-8.208-19.512-19.152zm18.72-12.744c-5.4 0-9.936 3.744-11.232 9.36h22.392c-1.224-5.616-5.76-9.36-11.16-9.36zm42.696.864h-3.024c-4.752 0-8.208 3.672-8.208 9.36V51h-7.272V14.28h7.2v4.536c1.8-2.952 4.752-4.824 8.784-4.824h2.52v6.768z"></path></svg>
+            </a>
+            <div class="header__nav header__nav--primary">
+
+            </div>
+          </div>
+          
+          <div class="header__right">
+            <div class="header__nav header__nav--secondary">
+              <button class="header__item">Log in</button>
+              <button class="header__item">Sign up</button>
+              <button class="header__item header__item--mobile"><svg aria-hidden="true" focusable="false" height="16px" fill="currentColor" viewBox="0 0 12 12"><path d="M0 3h12.002v2H0zm0 5h12.002v2H0z"></path></svg></button>
+            </div>
+          </div>
+        </div>
+      </div>   
         <div>
+
             <div id="map" class="shadow-lg h-full w-full h-6/12 "  style="width: 100%; height: 100vh;">
             </div>
 
@@ -229,7 +253,9 @@
                                 </div>
                         </div>
                         <div class="flex w-full">
-                            <button id="recommendPlacesButton" class="flex circular-button ml-10 text-black font-regular text-xs hover:bg-gray-700 hover:text-white ">
+                            <button id="recommendPlacesButton"
+                            onclick="getCurrentLocationRecommendation()" 
+                            class="flex circular-button ml-10 text-black font-regular text-xs hover:bg-gray-700 hover:text-white ">
                                 <div>Recommend</div>
                                 <span>
                                     <svg xmlns="http://www.w3.org/2000/svg" class="ml-2 w-4" viewBox="0 0 512 512"><path d="M256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256C512 397.4 397.4 512 256 512zM232 256C232 264 236 271.5 242.7 275.1L338.7 339.1C349.7 347.3 364.6 344.3 371.1 333.3C379.3 322.3 376.3 307.4 365.3 300L280 243.2V120C280 106.7 269.3 96 255.1 96C242.7 96 231.1 106.7 231.1 120L232 256z"/></svg>
@@ -250,205 +276,9 @@
 
                       <div class="recoommedation-card-section">
                         <div class="flex flex-col transition ">
-                          <div class="flex mt-2 mb-2 mr-auto ml-auto">
-                              <button class=" circular-button m-3 text-sm text-black hover:bg-gray-700 hover:text-white">
-                                  Suggestion
-                              </button>
-              
-                              <button class=" circular-button m-3 text-sm text-black hover:bg-gray-700 hover:text-white">
-                                  Based on your visit
-                              </button>
-                          </div>
-              
+
                           <div id="recommendation_area" class="scroll scroll--simple">
-                            <div class="bg-white-200 mb-4">
 
-                                <div class="flex items-center justify-center bg-purple-50 bg-opacity-0 ">
-                                    <div class="flex flex-col h-full">
-                                        <div class="w-full pl-2 pr-2">
-                                            <div class="flex items-center justify-between flex-1 h-full px-4 py-2 rounded-xl bg-purple-50">
-                                                <p class="text-lg font-heavy text-red-400">Lunch</p>
-                                            </div>
-                                        </div>
-                                        <div class="flex flex-col w-full">
-                                            <div class="place-card relative flex bg-white-200 mt-5 mb-5 p-2 shadow border rounded-2xl border-gray-100 shadow-lg" style="width: 360px;">
-                                                <div class="ribbon ribbon-top-left"><span>Uber Eats</span></div>
-                                                <div class="w-2/5 m-auto">
-                                                    <img class="rounded-2xl" src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YXBwZXRpemVyc3xlbnwwfHwwfHw%3D&w=1000&q=80" style="width: 120px; height: 120px;"></img>
-                                                </div >
-                                                <div class="flex flex-col">
-                                                  <div class="flex w-full h-42">
-                                                      <div class="flex flex-col w-11/12 mt-2 h-42" >
-                                                          <p class="w-full font-bold text-xs text-gray-900 pl-2 pr-5 ">Subway delight</p>
-                                                          <div class="flex flex-col pl-2 pr-5 ">
-                                                              <div class="flex mt-2">
-                                                                  <p class="text-gray-500 mr-3">3</p>
-                                                                  <div >
-                                                                      <span class="fa fa-star checked"></span>
-                                                                      <span class="fa fa-star checked"></span>
-                                                                      <span class="fa fa-star checked"></span>
-                                                                      <span class="fa fa-star"></span>
-                                                                      <span class="fa fa-star"></span>
-                                                                  </div>
-                                                                  
-                                                              </div>
-                                                              <div class="flex w-full">
-                                                                  <div class="mt-3 mb-2 text-center rounded-3xl text-xs text-white bg-green-500 px-4 py-1">
-                                                                      Opened
-                                                                  </div>
-                                                              </div>
-                                                              
-                                                          </div>
-                                                      </div>
-                              
-                                                      <div class="pt-2">
-                                                          <div class="form-check">
-                                                            <input class="form-check-input appearance-none h-4 w-4 border border-black rounded-sm bg-white checked:bg-black checked:border-black focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" onclick="togglePlaceCheckbox(this)" value="${place.name}" id="${place.place_id}">                        
-                                                          </div>
-                                                        </div>
-                                                  </div>
-  
-                                                  <div class="flex w-full ml-2">
-                                                      <button class="bg-black text-xs px-2 py-2 text-white px-2 font-regular rounded-3xl border  shadow">
-                                                        ₹125 Book Ride
-                                                        </button>
-              
-                                                        <button onclick="knowMorePage()" class="text-xs bg-black px-2  py-2 ml-2 text-white rounded-3xl font-regular shadow">
-                                                          Know More
-                                                      </button>
-                                                  </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                
-                                    </div>
-                                </div>
-
-                                <div class="flex items-center justify-center bg-purple-50 bg-opacity-0 ">
-                                    <div class="flex flex-col h-full">
-                                        <div class="w-full pl-2 pr-2">
-                                            <div class="flex items-center justify-between flex-1 h-full px-4 py-2 rounded-xl bg-purple-50">
-                                                <p class="text-lg font-heavy text-red-400">Lunch</p>
-                                            </div>
-                                        </div>
-                                        <div class="flex flex-col w-full">
-                                            <div class="place-card relative flex bg-white-200 mt-5 mb-5 p-2 shadow border rounded-2xl border-gray-100 shadow-lg" style="width: 360px;">
-                                                <div class="ribbon ribbon-top-left"><span>Uber Eats</span></div>
-                                                <div class="w-2/5 m-auto">
-                                                    <img class="rounded-2xl" src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YXBwZXRpemVyc3xlbnwwfHwwfHw%3D&w=1000&q=80" style="width: 120px; height: 120px;"></img>
-                                                </div >
-                                                <div class="flex flex-col">
-                                                  <div class="flex w-full h-42">
-                                                      <div class="flex flex-col w-11/12 mt-2 h-42" >
-                                                          <p class="w-full font-bold text-xs text-gray-900 pl-2 pr-5 ">Subway delight</p>
-                                                          <div class="flex flex-col pl-2 pr-5 ">
-                                                              <div class="flex mt-2">
-                                                                  <p class="text-gray-500 mr-3">3</p>
-                                                                  <div >
-                                                                      <span class="fa fa-star checked"></span>
-                                                                      <span class="fa fa-star checked"></span>
-                                                                      <span class="fa fa-star checked"></span>
-                                                                      <span class="fa fa-star"></span>
-                                                                      <span class="fa fa-star"></span>
-                                                                  </div>
-                                                                  
-                                                              </div>
-                                                              <div class="flex w-full">
-                                                                  <div class="mt-3 mb-2 text-center rounded-3xl text-xs text-white bg-green-500 px-4 py-1">
-                                                                      Opened
-                                                                  </div>
-                                                              </div>
-                                                              
-                                                          </div>
-                                                      </div>
-                              
-                                                      <div class="pt-2">
-                                                          <div class="form-check">
-                                                            <input class="form-check-input appearance-none h-4 w-4 border border-black rounded-sm bg-white checked:bg-black checked:border-black focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" onclick="togglePlaceCheckbox(this)" value="${place.name}" id="${place.place_id}">                        
-                                                          </div>
-                                                        </div>
-                                                  </div>
-  
-                                                  <div class="flex w-full ml-2">
-                                                      <button class="bg-black text-xs px-2 py-2 text-white px-2 font-regular rounded-lg border  shadow">
-                                                        ₹125 Book Ride
-                                                        </button>
-              
-                                                        <button onclick="knowMorePage()" class="text-xs bg-black px-2  py-2 ml-2 text-white rounded-lg font-regular shadow">
-                                                          Know More
-                                                      </button>
-                                                  </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                
-                                    </div>
-                                </div>
-
-
-                                <div class="flex items-center justify-center bg-purple-50 bg-opacity-0 ">
-                                    <div class="flex flex-col h-full">
-                                        <div class="w-full pl-2 pr-2">
-                                            <div class="flex items-center justify-between flex-1 h-full px-4 py-2 rounded-xl bg-purple-50">
-                                                <p class="text-lg font-heavy text-red-400">Lunch</p>
-                                            </div>
-                                        </div>
-                                        <div class="flex flex-col w-full">
-                                            <div class="place-card relative flex bg-white-200 mt-5 mb-5 p-2 shadow border rounded-2xl border-gray-100 shadow-lg" style="width: 360px;">
-                                                <div class="ribbon ribbon-top-left"><span>Uber Eats</span></div>
-                                                <div class="w-2/5 m-auto">
-                                                    <img class="rounded-2xl" src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8YXBwZXRpemVyc3xlbnwwfHwwfHw%3D&w=1000&q=80" style="width: 120px; height: 120px;"></img>
-                                                </div >
-                                                <div class="flex flex-col">
-                                                  <div class="flex w-full h-42">
-                                                      <div class="flex flex-col w-11/12 mt-2 h-42" >
-                                                          <p class="w-full font-bold text-xs text-gray-900 pl-2 pr-5 ">Subway delight</p>
-                                                          <div class="flex flex-col pl-2 pr-5 ">
-                                                              <div class="flex mt-2">
-                                                                  <p class="text-gray-500 mr-3">3</p>
-                                                                  <div >
-                                                                      <span class="fa fa-star checked"></span>
-                                                                      <span class="fa fa-star checked"></span>
-                                                                      <span class="fa fa-star checked"></span>
-                                                                      <span class="fa fa-star"></span>
-                                                                      <span class="fa fa-star"></span>
-                                                                  </div>
-                                                                  
-                                                              </div>
-                                                              <div class="flex w-full">
-                                                                  <div class="mt-3 mb-2 text-center rounded-3xl text-xs text-white bg-green-500 px-4 py-1">
-                                                                      Opened
-                                                                  </div>
-                                                              </div>
-                                                              
-                                                          </div>
-                                                      </div>
-                              
-                                                      <div class="pt-2">
-                                                          <div class="form-check">
-                                                            <input class="form-check-input appearance-none h-4 w-4 border border-black rounded-sm bg-white checked:bg-black checked:border-black focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" onclick="togglePlaceCheckbox(this)" value="${place.name}" id="${place.place_id}">                        
-                                                          </div>
-                                                        </div>
-                                                  </div>
-  
-                                                  <div class="flex w-full ml-2">
-                                                      <button class="bg-black text-xs px-2 py-2 text-white px-2 font-regular rounded-lg border  shadow">
-                                                        ₹125 Book Ride
-                                                        </button>
-              
-                                                        <button onclick="knowMorePage()" class="text-xs bg-black px-2  py-2 ml-2 text-white rounded-lg font-regular shadow">
-                                                          Know More
-                                                      </button>
-                                                  </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                
-                                    </div>
-                                </div>
-                            </div>
-
-                
                           </div>
                         </div>
                     </div>
@@ -466,10 +296,6 @@
 
     <script>
 
-        function knowMorePage(){
-            let url = new URL(window.location.origin + "/api/place/dighihills");
-            window.open(url, "_self");
-        }
 
         function bookCab(){
             let url = new URL(window.location.origin + "/desktop/nextspot/");

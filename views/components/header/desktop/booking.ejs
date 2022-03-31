@@ -10,6 +10,8 @@
   var service = null;
   var gmarkers = [];
   var boxes = null;
+  var latitude = null;
+  var longitude = null;
   var infowindow = new google.maps.InfoWindow();
 
   // check for Geolocation support
@@ -50,6 +52,7 @@
   }
 
   function initialize(latitude, longitude) {
+
     var mapOptions = {
       center: new google.maps.LatLng(latitude, longitude),
       mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -258,64 +261,219 @@
       });
     });
     gmarkers.push(marker);
-    console.log(place);
     if (!place.name) place.name = "result " + gmarkers.length;
 
     renderRecommendations(gmarkers, place);
   }
 
-  function renderRecommendations(gmarkers, place) {
-    var recommendation_area_html = `<div class="place-card relative flex bg-white-200 p-5 shadow rounded-2xl border-gray-500 shadow-2xl" style="width: 800px; height: 300px;">
-                    <div class="ribbon ribbon-top-left"><span>Uber Eats</span></div>
-                    <div class="w-2/5 m-auto">
-                        <img class="rounded-2xl" src="https://images.thrillophilia.com/image/upload/s--XcozMrbO--/c_fill,g_auto,h_600,q_auto,w_975/f_auto,fl_strip_profile/v1/images/photos/000/178/583/original/1573565509_cover.jpg.jpg" style="width: 196px; height: 196px;"></img>
-                    </div>
-                    <div class="flex flex-col w-3/5 h-42">
-                        <div class="flex flex-col w-3/5 h-32" >
-                            <p class="w-full text-2xl text-gray-900 pt-5 pl-5 pr-5 ">${place.name}</p>
-                            <div class="flex flex-col pl-5 pr-5 ">
-                                <p class="w-40 text-gray-500">Modern European</p>
-                                <div class="flex mt-2">
-                                    <p class="ext-xs text-gray-500 mr-3">${place.rating}</p>
-                                    <div >
-                                        <span class="fa fa-star checked"></span>
-                                        <span class="fa fa-star checked"></span>
-                                        <span class="fa fa-star checked"></span>
-                                        <span class="fa fa-star"></span>
-                                        <span class="fa fa-star"></span>
-                                    </div>
-                                    
-                                </div>
-                                <div>
-                                    <div class="mt-2 mb-2 w-24 text-center shadow-lg rounded-3xl text-black bg-white-400 px-2 py-1">
-                                        Opened
-                                    </div>
-                                </div>
-                                
-                            </div>
-                        </div>
+  function getCurrentLocationRecommendation(){
+    getRecommendationForLocation(null, latitude, longitude, 1500)
+                      .then((result)=> {
+                        document.getElementById("recommendation_area").innerHTML = "";
+                        renderSuggestions(result);
+                      })
+                      .catch((err)=>{
+                        console.log(err);
+                      })
+    document.getElementById("recommendation_area").innerHTML = `<iframe class="mt-16 ml-auto mr-auto" src="https://embed.lottiefiles.com/animation/53512"></iframe>`;
 
-                        <div class="flex w-3/5 mt-10 pl-5 pr-5">
-                            <button class="bg-black text-white font-regular py-2 px-4 border border-gray-400 rounded-xl shadow">
-                                Book a cab
-                              </button>
-                        </div>
-                    </div>
-                    
-                    <div class="pt-2">
-                        <img src="https://img.icons8.com/external-tanah-basah-glyph-tanah-basah/42/000000/external-plus-user-interface-tanah-basah-glyph-tanah-basah-2.png"/>                        
-                    </div>
-                </div>`;
+  }
+  function renderSuggestions(result){
+    document.getElementById("recommendation_area").innerHTML = "";
+    let places = result[0];
+    let multipleType = result[1];
+    let foodPlaces = [];
+    let moviePlaces = [];
+    let travelPlaces = [];
+    let categories = ['establishment', 'movie_theater', 'tourist_attraction']
 
-    document.getElementById("recommendation_area").innerHTML +=
-      recommendation_area_html;
+    let countFlag = 0;
+    for (var i = 0; i < places.length; i++) {
+      let place = places[i];
+      let typesArray = places[i].types;
+
+      if (typesArray.includes(categories[0]) || typesArray.includes("food")) foodPlaces.push(place);
+      if (typesArray.includes(categories[1])) moviePlaces.push(place);
+      if (typesArray.includes(categories[2])) travelPlaces.push(place);
+
+    }
+
+    if(foodPlaces.length) renderFood(foodPlaces);
+    if(moviePlaces.length) renderMovies(moviePlaces);
+    if(travelPlaces.length) renderTravel(travelPlaces);
+
+    //if(!countFlag) document.getElementById("recommendation_area").innerHTML = `<p class="m-5 mt-16 text-2xl">Currently no suggestions.</p>`;
+
   }
 
-  function renderSuggestions(activities) {}
+  function renderFood(places){
+    let activity = getCurrentAction();
+    let content = "";
+    activity = activity.split('-')[1];
+
+    if(activity == "morning"){
+      activity = "Breakfast";
+    }else if(activity == "afternoon"){
+      activity = "Lunch";
+    }else if(activity == "evening"){
+      activity = "Snacks";
+    }else if(activity == "night"){
+      activity = "Dinner";
+    }
+    let outerCard = `<div class="flex items-center justify-center bg-purple-50 bg-opacity-0 ">
+                                    <div class="flex flex-col h-full">
+                                        <div class="w-full pl-2 pr-2">
+                                            <div class="flex items-center justify-between flex-1 h-full px-4 py-2 rounded-xl bg-purple-50">
+                                                <p class="text-lg font-heavy text-red-400">${activity}</p>
+                                            </div>
+                                        </div>`;
+                                   
+    
+
+    for(var i=0; i<places.length; i++){
+      content += getCardContent(places[i], 'restaurant');
+    }
+
+    outerCard  = outerCard + content + `</div> <div>`;
+    document.getElementById('recommendation_area').innerHTML += outerCard;
+  }
+
+  function renderMovies(places){
+    let content = "";
+    let outerCard = `<div class="flex items-center justify-center bg-purple-50 bg-opacity-0 ">
+                                    <div class="flex flex-col h-full">
+                                        <div class="w-full pl-2 pr-2">
+                                            <div class="flex items-center justify-between flex-1 h-full px-4 py-2 rounded-xl bg-purple-50">
+                                                <p class="text-lg font-heavy text-red-400">Theater</p>
+                                            </div>
+                                        </div>`;
+                                   
+    
+
+    for(var i=0; i<places.length; i++){
+      content += getCardContent(places[i], 'movie_theater');
+    }
+
+    outerCard  = outerCard + content + `</div> <div>`;
+    document.getElementById('recommendation_area').innerHTML += outerCard;
+  }
+
+  function renderTravel(places){
+    let content = "";
+    let outerCard = `<div class="flex items-center justify-center bg-purple-50 bg-opacity-0 ">
+                                    <div class="flex flex-col h-full">
+                                        <div class="w-full pl-2 pr-2">
+                                            <div class="flex items-center justify-between flex-1 h-full px-4 py-2 rounded-xl bg-purple-50">
+                                                <p class="text-lg font-heavy text-red-400">Travel</p>
+                                            </div>
+                                        </div>`;
+                                   
+    
+
+    for(var i=0; i<places.length; i++){
+      content += getCardContent(places[i], 'tourist_attratction');
+    }
+
+    outerCard  = outerCard + content + `</div> <div>`;
+    document.getElementById('recommendation_area').innerHTML += outerCard;
+  }
+
+  function getCardContent(place, type) {
+            let placeImageURL = null;
+            let uberEatsTags = `<div class="ribbon ribbon-top-left"><span>Uber Eats</span></div>`;
+            let imageArray = ["https://images.thrillophilia.com/image/upload/s--XcozMrbO--/c_fill,g_auto,h_600,q_auto,w_975/f_auto,fl_strip_profile/v1/images/photos/000/178/583/original/1573565509_cover.jpg.jpg",
+                              "https://www.sundayguardianlive.com/wp-content/uploads/2020/07/3-Dib-restaurant-losses-edited.jpg",
+                              "https://static.toiimg.com/thumb/68007187/garden.jpg?width=1200&height=900",
+                              "https://images.unsplash.com/photo-1524443169398-9aa1ceab67d5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dGVtcGxlfGVufDB8fDB8fA%3D%3D&w=1000&q=80"]
+            let starsRatingHTML = " ";
+            let rating = (place.rating == undefined)? (0): place.rating;
+
+            if(type == "restaurant"){
+              placeImageURL = imageArray[1];
+            }else if(type == "tourist_attraction"){
+              placeImageURL = imageArray[0];
+              uberEatsTags = ``;
+            }else if(type == "hindu_temple"){
+              placeImageURL = imageArray[3];
+              uberEatsTags = ``;
+            }else if(type == "park"){
+              placeImageURL = imageArray[2];
+              uberEatsTags = ``;
+            }else {
+              placeImageURL = imageArray[0];
+              uberEatsTags = ``;
+            }
+
+            for(let j=1; j<=place.rating; j++){
+              starsRatingHTML += `<span class="fa fa-star checked"></span>`;
+            }
+
+
+            var recommendation_area_html = `<div class="place-card relative flex flex-col bg-white-200 mt-5 mb-5 ml-auto mr-auto p-2 shadow border rounded-2xl border-gray-100 shadow-lg" style="width: 360px;">
+                                          <div class="flex">    
+                                            <div class="w-2/5 m-auto">
+                                                    <img class="rounded-2xl" src="${placeImageURL}" style="width: 120px; height: 120px;"></img>
+                                                </div >
+                                                <div class="flex flex-col">
+                                                  <div class="flex w-full h-42">
+                                                      <div class="flex flex-col w-11/12 mt-2 h-42" >
+                                                          <p class="w-full font-bold text-xs text-gray-900 pl-2 pr-5 ">${place.name}</p>
+                                                          <div class="flex flex-col pl-2 pr-5 ">
+                                                              <div class="flex mt-2">
+                                                                  <p class="text-gray-500 mr-3">${rating}</p>
+                                                                  <div>`
+                                                                      + starsRatingHTML +
+                                                                  `</div>
+                                                                  
+                                                              </div>
+                                                              <div class="flex w-full">
+                                                                  <div class="mt-3 mb-2 text-center rounded-3xl text-xs text-white bg-green-500 px-4 py-1">
+                                                                      Opened
+                                                                  </div>
+                                                              </div>
+                                                              
+                                                          </div>
+                                                      </div>
+                              
+                                                      <div class="pt-2">
+                                                          <div class="form-check">
+                                                            <input class="form-check-input appearance-none h-4 w-4 border border-black rounded-sm bg-white checked:bg-black checked:border-black focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" onclick="togglePlaceCheckbox(this)" value="${place.name}" id="${place.place_id}">                        
+                                                          </div>
+                                                        </div>
+                                                  </div>
+  
+                                                  <div class="flex w-full ml-2">
+                                                      <button class="bg-black text-xs px-2 py-2 text-white px-2 font-regular rounded-3xl border  shadow">
+                                                        ₹125 Book Ride
+                                                        </button>
+              
+                                                        <button id="${place.place_id}-button" value="${place.name}" onclick="knowMorePage()" class="text-xs bg-black px-2  py-2 ml-2 text-white rounded-3xl font-regular shadow">
+                                                          Know More
+                                                      </button>
+                                                  </div>
+                                                </div>`
+                                                + uberEatsTags + `</div> 
+                                                <div id="${place.place_id}footer" class=" text-lg font-bold m-2 ml-auto mr-auto"></div>
+                                                </div>`;
+
+            // document.getElementById("recommendation_area").innerHTML +=
+            //   recommendation_area_html;
+
+            return recommendation_area_html
+          }
+  
 </script>
 
 <script>
   let selectedPlaces = [];
+  function knowMorePage(element){
+            let id = element.id;
+            let name = element.value;
+
+            console.log(id)
+            let url = new URL(window.location.origin + `/desktop/details?placeid=${id}&name=${name}`);
+            //window.open(url, "_self");
+  }
 
   function togglePlaceCheckbox(element) {
     if (

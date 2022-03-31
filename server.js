@@ -78,6 +78,8 @@ app.use('/auth', auth);
 // set the view engine to ejs
 app.set('view engine', 'ejs');
 
+app.use(express.static(__dirname + '/public'));
+
 app.use(bodyParser.urlencoded(
   { extended:true }
 ))
@@ -102,7 +104,9 @@ app.get('/nextspot', function(req, res) {
 });
 
 
-
+app.get('/test', function(req, res) {
+  res.render('placeDetails');
+});
 
 app.get('/desktop/booking', function(req, res) {
   res.render('desktop/booking');
@@ -128,9 +132,13 @@ app.get('/multiroute', function(req, res) {
 });
 
 app.get('/desktop/multiroute', function(req, res) {
-
   res.render('desktop/multiroute', {places: req.query.places});
 });
+
+app.get('desktop/details', function(req, res) {
+  res.render('newPlaceDetails');
+});
+
 app.use(errorHandler);
 const PORT = process.env.PORT || 5000;
 

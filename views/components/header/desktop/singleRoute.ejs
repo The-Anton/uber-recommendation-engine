@@ -300,13 +300,7 @@
     map.set("styles", mapStyles);
     route(origin, destination);
 
-    getRecommendationForLocation(latitude,longitude, 1500)
-                      .then((result)=> {
-                        renderSuggestions(result);
-                      })
-                      .catch((err)=>{
-                        console.log(err);
-                      })
+
   }
 
   function route(origin, destination) {
@@ -327,7 +321,14 @@
     directionService.route(request, function (result, status) {
       if (status == google.maps.DirectionsStatus.OK) {
         directionsRenderer.setDirections(result);
-
+        console.log(result);
+            getRecommendationForLocation(result.geocoded_waypoints[1].place_id,latitude,longitude, 1500)
+                      .then((result)=> {
+                        renderSuggestions(result);
+                      })
+                      .catch((err)=>{
+                        console.log(err);
+                      })
         // Box around the overview path of the first route
         var path = result.routes[0].overview_path;
         boxes = routeBoxer.box(path, distance);
@@ -372,7 +373,6 @@
       if (status == google.maps.places.PlacesServiceStatus.OK) {
 
         aroundRoutePlaces = results;
-        console.log(aroundRoutePlaces);
         for (var i = 0, result; (result = results[i]); i++) {
           let typesArray = result.types;
           if (typesArray.includes("tourist_attraction") || typesArray.includes("restaurant")) {
@@ -429,6 +429,7 @@
     };
     google.maps.event.addListener(marker, "click", function () {
       service.getDetails(request, function (place, status) {
+        console.log(place)
         if (status == google.maps.places.PlacesServiceStatus.OK) {
           var contentStr =
             "<h5>" + place.name + "</h5><p>" + place.formatted_address;
