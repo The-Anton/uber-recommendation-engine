@@ -25,10 +25,45 @@ Members : <br>
 </ul>
 
 ![AnchorTag - Uber HackTag 2 0 (1)](https://user-images.githubusercontent.com/51144829/160924820-e3bf52b7-3b82-45fb-9558-c5f2891ca220.png)
-)
-![image](https://user-images.githubusercontent.com/51144829/160924921-e472530d-7876-4c40-8278-57ce148e9c28.png)
-![image](https://user-images.githubusercontent.com/51144829/160924740-be585dbe-e64d-45d8-8169-fc79012dd3f0.png)
-
-![image](https://user-images.githubusercontent.com/51144829/160924799-f8baaeaf-ad1c-4fbb-aae1-7b6cd333a8fe.png)
 
 
+## Web View 
+![Web-UI](https://user-images.githubusercontent.com/51144829/160986815-b9d5e563-2cf8-4bc3-8d5a-1ab6924acd9a.png)
+
+<br>
+<br>
+
+![Web-UI](https://user-images.githubusercontent.com/51144829/160986919-c2601901-006d-42a1-b2ff-aa9f8a222e8c.png)
+
+
+<br>
+<br>
+
+![Place details](https://user-images.githubusercontent.com/51144829/160986612-00e38979-c8da-49ff-b577-1e0746338ef7.png)
+
+
+
+<br>
+<br>
+
+![Web-UI](https://user-images.githubusercontent.com/51144829/160987096-ccc77f2c-4ee7-4778-9f38-64d6ffe67051.png)
+
+
+## Mobile View
+<br>
+<br>
+
+<br>
+<br>
+
+![Screen](https://user-images.githubusercontent.com/51144829/160924921-e472530d-7876-4c40-8278-57ce148e9c28.png)
+
+<br>
+<br>
+
+![Screen](https://user-images.githubusercontent.com/51144829/160924740-be585dbe-e64d-45d8-8169-fc79012dd3f0.png)
+
+<br>
+<br>
+
+![Screen](https://user-images.githubusercontent.com/51144829/160924799-f8baaeaf-ad1c-4fbb-aae1-7b6cd333a8fe.png)
