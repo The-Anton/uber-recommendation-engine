@@ -375,7 +375,7 @@
         aroundRoutePlaces = results;
         for (var i = 0, result; (result = results[i]); i++) {
           let typesArray = result.types;
-          if (typesArray.includes("tourist_attraction") || typesArray.includes("restaurant")) {
+          if (typesArray.includes("tourist_attraction") || typesArray.includes("restaurant")|| typesArray.includes("hindu_temple")) {
             var marker = createMarker(result);
           }
         }
@@ -464,6 +464,7 @@
       let place = aroundRoutePlaces[i];
       let typesArray = aroundRoutePlaces[i].types;
 
+      console.log(typesArray);
       if (typesArray.includes(type)){
         console.log(aroundRoutePlaces[i]);
         countFlag = 1;
@@ -566,7 +567,7 @@
                                                         ₹125 Book Ride
                                                         </button>
               
-                                                        <button onclick="knowMorePage()" class="text-xs bg-black px-2  py-2 ml-2 text-white rounded-3xl font-regular shadow">
+                                                        <button id="${place.place_id}-button" value="${place.name}" onclick="knowMorePage(this)" class="text-xs bg-black px-2  py-2 ml-2 text-white rounded-3xl font-regular shadow">
                                                           Know More
                                                       </button>
                                                   </div>

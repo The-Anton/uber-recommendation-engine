@@ -447,7 +447,7 @@
                                                         ₹125 Book Ride
                                                         </button>
               
-                                                        <button id="${place.place_id}-button" value="${place.name}" onclick="knowMorePage()" class="text-xs bg-black px-2  py-2 ml-2 text-white rounded-3xl font-regular shadow">
+                                                        <button id="${place.place_id}-button" value="${place.name}" onclick="knowMorePage(this)" class="text-xs bg-black px-2  py-2 ml-2 text-white rounded-3xl font-regular shadow">
                                                           Know More
                                                       </button>
                                                   </div>
@@ -468,11 +468,13 @@
   let selectedPlaces = [];
   function knowMorePage(element){
             let id = element.id;
+            id = id.split('-')[0];
             let name = element.value;
 
-            console.log(id)
+            
             let url = new URL(window.location.origin + `/desktop/details?placeid=${id}&name=${name}`);
-            //window.open(url, "_self");
+            console.log(url)
+            window.open(url, "_self");
   }
 
   function togglePlaceCheckbox(element) {

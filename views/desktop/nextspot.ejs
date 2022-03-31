@@ -299,8 +299,21 @@
 
 
     <script>
+
+    function knowMorePage(element){
+            let id = element.id;
+            id = id.split('-')[0];
+            let name = element.value;
+
+            let url = new URL(window.location.origin + `/desktop/details?placeid=${id}&name=${name}`);
+            console.log(url)
+            window.open(url, "_self");
+            console.log(url);
+
+    }
       var selectedPlaces = [];
       var resultedPlaces = [];
+
 
       function togglePlaceCheckbox(element) {
         if (
@@ -349,10 +362,6 @@
         }
       }
 
-      function knowMorePage() {
-        let url = new URL(window.location.origin + "/api/place/dighihills");
-        window.open(url, "_self");
-      }
 
       function showBestRoute() {
         var selectedPlacesString = selectedPlaces

@@ -11,8 +11,17 @@
 
     <div class="pt-16 w-6/12 mr-auto ml-auto">
         
-        <div id="upper-content"></div>
+        <div id="upper-content">
 
+          
+          
+        </div>
+        <div id="image-content" class="flex  text-center">
+            <iframe
+            class="ml-auto mr-auto mt-8"
+            src="https://embed.lottiefiles.com/animation/53512"
+          ></iframe>
+        </div>
 
         <div class="flex-grow w-full">
             <div class="mx-auto w-full ">
@@ -42,8 +51,13 @@
                 </div>
                 <div 
                   id="scrollContainer"
-                  class="flex flex-no-wrap p-5 overflow-x-scroll scrolling-touch items-start mb-8"
+                  class="flex p-5 overflow-x-scroll scrolling-touch items-start mb-8"
                 >
+
+                  <iframe
+                  class="ml-auto mr-auto mt-8"
+                  src="https://embed.lottiefiles.com/animation/53512"
+                ></iframe>
               </div>
             </div>
           </div>
@@ -57,7 +71,10 @@
       let placeName = urlParams.get("name");
       let placeId = urlParams.get("placeid");
 
-
+      document.getElementById('upper-content').innerHTML += `
+                <div class="text-center m-5 ">
+                <h2 class="text-3xl font-bold">${placeName}</h2>
+                </div>`;
       serpapiContent(placeName);
       googleMapsContent(placeId);
 
@@ -72,22 +89,34 @@
 
           axios.get(url)
           .then((response)=> {
-              let mainVideoEmbedUrl = getYouTubeEmbedLink(response.data.inline_videos[0].link);
+            console.log(response);
+            let mainVideoEmbedUrl = "";
 
-                document.getElementById('upper-content').innerHTML += `<div class="text-center m-5 ">
-                    <h2 class="text-3xl font-bold">${response.data.knowledge_graph.title}</h2>
-                </div>
+          
 
+
+            try{
+              document.getElementById('image-content').innerHTML = "";
+
+              mainVideoEmbedUrl = getYouTubeEmbedLink(response.data.inline_videos[0].link) ;
+              document.getElementById('upper-content').innerHTML += `
                 <div class="mt-5 mb-5">
                     <iframe class="m-auto rounded-lg" width="80%" height="354px" src="${mainVideoEmbedUrl}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
+                </div>`;
 
 
-                <div class="flex  text-center">
-                    <img class="m-auto rounded-2xl w-5/12 h-42" src="${response.data.inline_images[0].thumbnail}" ></img>
-                    <img class="m-auto rounded-2xl w-5/12 h-42" src="${response.data.inline_images[1].thumbnail}" ></img>
+                document.getElementById('image-content').innerHTML += `<div class="flex text-center ml-auto mr-auto">
+                    <img class="m-auto rounded-lg h-42" src="${response.data.inline_images[0].thumbnail}" ></img>
+                    <img class="m-auto rounded-lg h-42" src="${response.data.inline_images[1].thumbnail}" ></img>
+                    <img class="m-auto rounded-lg h-42" src="${response.data.inline_images[2].thumbnail}" ></img>
+                    <img class="m-auto rounded-lg h-42" src="${response.data.inline_images[3].thumbnail}" ></img>
 
                 </div>`
+            }catch{
+
+            }
+
+                
           })
           .catch(function (err) {
             console.log("Fetch Error :-S", err);
@@ -102,9 +131,11 @@
 
           axios.get(url)
           .then((response)=> {
-              console.log(response.data.result.reviews);
+              console.log(response.data.result);
+              document.getElementById('scrollContainer').innerHTML = "";
+
                 for(let i=0; i<response.data.result.reviews.length; i++){
-                    document.getElementById('scrollContainer').innerHTML = `<div class="flex-none w-2/3 md:w-2/3 mr-8 md:pb-4 border rounded-2xl shadow-xl">
+                    document.getElementById('scrollContainer').innerHTML += `<div class="flex-none w-2/3 md:w-2/3 mr-8 md:pb-4 border rounded-2xl shadow-xl">
                                     <a href="#" class="space-y-4">
                                     <div class="px-4 py-2">
                                         <div class="text-lg leading-6 font-medium space-y-1">
@@ -132,7 +163,10 @@
                                     </a>
             
                                 </div>`
+
+                
                 }
+
           })
           .catch(function (err) {
             console.log("Fetch Error :-S", err);

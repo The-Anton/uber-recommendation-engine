@@ -232,7 +232,7 @@
         orderedPlaceName.push(endLocation);
 
         // For each route, display summary information.
-        for (let i = 0; i < route.legs.length; i++) {
+        for (let i = 0; i < route.legs.length-1; i++) {
           const routeSegment = i + 1;
           let cardHTML = `<div class="route-card bg-white-200" style="width: 356px;">
                         <div class="flex  ml-10 items-center justify-center flex-1 p-6 bg-purple-50 bg-opacity-0 border rounded-3xl border-gray-100 shadow-xl">
@@ -281,7 +281,7 @@
                         </div>
                     </div>`
 
-          if(i != route.legs.length-1){
+          if(i != route.legs.length-2){
             cardHTML = cardHTML + `<div class="vertical-line w-6/12 ml-auto mr-auto"></div>`;
           }
 

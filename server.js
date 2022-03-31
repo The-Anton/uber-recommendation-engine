@@ -135,7 +135,7 @@ app.get('/desktop/multiroute', function(req, res) {
   res.render('desktop/multiroute', {places: req.query.places});
 });
 
-app.get('desktop/details', function(req, res) {
+app.get('/desktop/details', function(req, res) {
   res.render('newPlaceDetails');
 });
 
