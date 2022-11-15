@@ -13,7 +13,8 @@ Recommending various nearby places users can visit before or after booking the U
 We have implement a web application with mobile and desktop view.
 <br>
 <a target="_blank" href="https://uberrecommendation.southindia.cloudapp.azure.com/desktop" >Our deployed solution</a><br>
-
+<a target="_blank" href="https://drive.google.com/file/d/1aMXktlowZ6mTDhRDlOSXe2JwK-QGVW3A/view?usp=sharing">Our video demo</a><br>
+<a target="_blank" href="https://www.canva.com/design/DAE8RMqihDc/IPBjwI4vESggKktGYeKfA/viewutm_content=DAE8RMqihDc&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton">Our Presentation</a><br>
 <h2>Details:</h2>
 
 Developed by: Team AnchorTag <br>
